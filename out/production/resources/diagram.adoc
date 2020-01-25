@@ -1,0 +1,173 @@
+[plantuml, commit,png, title=commit action, width=1000, height=1000]
+....
+
+class Commit7 <<(C,cyen)>> {
+-e118e43a2ccb9824eefb2a0cb2175e5e763c18b9
+--
+a
+
+}
+class Commit6 <<(C,blue)>> {
+-703eebddb89f84373bd5b14ee34cc2067e09912c
+--
+added test.txt
+
+}
+class Commit5 <<(C,red)>> {
+-15bcffa9661e4bcdee5f5b829c8a8eb457c79778
+--
+Merge branch 'feature'
+
+}
+class Commit4 <<(C,yellow)>> {
+-bc544072b3bbd08ad96a4e7aa39aa4ae7df6773e
+--
+fourth commit
+
+}
+class Commit3 <<(C,orange)>> {
+-21646375bb190e9014dfc96ead104aa998c7514f
+--
+third commit
+
+}
+class Commit2 <<(C,lightblue)>> {
+-b2102dcca4bb97644ff273368fe64cdd9be9d372
+--
+second commit
+
+}
+class Commit1 <<(C,lightgreen)>> {
+-59f7b145618e19c66e0e76eecc26bfab8b1be49c
+--
+first commit
+
+}
+class Tree7 <<(T,cyen)>> {
+-98675cf5014046e1ca4c04b750bf99dd5224735f
+--
+# first.txt 100644 70935ce05746073e4eed7fecd06a8c327c413992
+# fourth.txt 100644 5420ebf9c8f6cd984baf68ba9f55e476c5f8d814
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+# test.txt 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+# third.txt 100644 17354a8f90e699ed7e4fd7b1ae68b36ab5365d6b
+
+}
+class Tree6 <<(T,blue)>> {
+-e1b1ca8fec0329d341a45b6f65ea7f311475a76d
+--
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+# fourth.txt 100644 5420ebf9c8f6cd984baf68ba9f55e476c5f8d814
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+# test.txt 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+# third.txt 100644 17354a8f90e699ed7e4fd7b1ae68b36ab5365d6b
+
+}
+class Tree5 <<(T,red)>> {
+-49581793af4a92593ffd11dd65c19b29b2cad4e2
+--
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+# fourth.txt 100644 5420ebf9c8f6cd984baf68ba9f55e476c5f8d814
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+# third.txt 100644 17354a8f90e699ed7e4fd7b1ae68b36ab5365d6b
+
+}
+class Tree4 <<(T,yellow)>> {
+-49581793af4a92593ffd11dd65c19b29b2cad4e2
+--
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+# fourth.txt 100644 5420ebf9c8f6cd984baf68ba9f55e476c5f8d814
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+# third.txt 100644 17354a8f90e699ed7e4fd7b1ae68b36ab5365d6b
+
+}
+class Tree3 <<(T,orange)>> {
+-7cde7b236dbb2e34489489381125e705faeaf879
+--
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+# third.txt 100644 17354a8f90e699ed7e4fd7b1ae68b36ab5365d6b
+
+}
+class Tree2 <<(T,lightblue)>> {
+-c8cae1e11b2a67269a95cb3c4f310c01c3ee466e
+--
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+
+}
+class Tree1 <<(T,lightgreen)>> {
+-5b9ddc8ff39ad75d0f98e71780cbbf56478dbb8d
+--
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+
+}
+class Blob6 <<(B,blue)>> {
+-70935ce05746073e4eed7fecd06a8c327c413992
+--
+First line
+Fourth line
+
+}
+class Blob4 <<(B,yellow)>> {
+-5420ebf9c8f6cd984baf68ba9f55e476c5f8d814
+--
+Fourth line
+
+}
+class Blob1 <<(B,lightgreen)>> {
+-9649cde946d8d0896fa80977b9bcd76439f99e6b
+--
+First line
+
+}
+class Blob3 <<(B,orange)>> {
+-17354a8f90e699ed7e4fd7b1ae68b36ab5365d6b
+--
+Third line
+
+}
+class Blob2 <<(B,lightblue)>> {
+-bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+--
+Second line
+
+}
+class Blob5 <<(B,red)>> {
+-e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+--
+
+}
+Commit7 --|> Tree7
+Commit6 --|> Tree6
+Commit5 --|> Tree5
+Commit4 --|> Tree4
+Commit3 --|> Tree3
+Commit2 --|> Tree2
+Commit1 --|> Tree1
+Tree7 --|> Blob6
+Tree7 --|> Blob4
+Tree7 --|> Blob2
+Tree7 --|> Blob5
+Tree7 --|> Blob3
+Tree6 --|> Blob1
+Tree6 --|> Blob4
+Tree6 --|> Blob2
+Tree6 --|> Blob5
+Tree6 --|> Blob3
+Tree5 --|> Blob1
+Tree5 --|> Blob4
+Tree5 --|> Blob2
+Tree5 --|> Blob3
+Tree4 --|> Blob1
+Tree4 --|> Blob4
+Tree4 --|> Blob2
+Tree4 --|> Blob3
+Tree3 --|> Blob1
+Tree3 --|> Blob2
+Tree3 --|> Blob3
+Tree2 --|> Blob1
+Tree2 --|> Blob2
+Tree1 --|> Blob1
+
+....

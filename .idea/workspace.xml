@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d6accb29-ceae-45bc-9d11-973d1b1ba2ed" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1Wqx2yovM91OjqgtZNGDHAvzTDA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="LombokPluginEnabledInProject" value="true" />
+    <property name="LombokPluginIS_ANNOTATION_PROCESSING_CHECK_Enabled" value="true" />
+    <property name="LombokPluginIS_BUILDER_Enabled" value="true" />
+    <property name="LombokPluginIS_CONSTRUCTOR_Enabled" value="true" />
+    <property name="LombokPluginIS_DELEGATE_Enabled" value="true" />
+    <property name="LombokPluginIS_LOG_Enabled" value="true" />
+    <property name="LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled" value="true" />
+    <property name="LombokPluginIS_MISSING_LOMBOK_CHECK_Enabled" value="true" />
+    <property name="LombokPluginIS_VAL_Enabled" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+  </component>
+  <component name="RunManager">
+    <configuration name="GitUml" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.github.tsypuk.GitUml" />
+      <module name="test.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.github.tsypuk.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GitUml" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d6accb29-ceae-45bc-9d11-973d1b1ba2ed" name="Default Changelist" comment="" />
+      <created>1579890722236</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579890722236</updated>
+      <workItem from="1579890725497" duration="21793000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="273" y="436" width="1214" height="573" key="#xdebugger.evaluate" timestamp="1579954579939">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="273" y="436" width="1214" height="573" key="#xdebugger.evaluate/0.0.1680.1050@0.0.1680.1050" timestamp="1579954579939" />
+    <state width="1638" height="373" key="GridCell.Tab.0.bottom" timestamp="1579981157459">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="373" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1579981157459" />
+    <state width="1638" height="373" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1579979709994" />
+    <state width="1638" height="373" key="GridCell.Tab.0.center" timestamp="1579981157458">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="373" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1579981157458" />
+    <state width="1638" height="373" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1579979709993" />
+    <state width="1638" height="373" key="GridCell.Tab.0.left" timestamp="1579981157457">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="373" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1579981157457" />
+    <state width="1638" height="373" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1579979709992" />
+    <state width="1638" height="373" key="GridCell.Tab.0.right" timestamp="1579981157459">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="373" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1579981157459" />
+    <state width="1638" height="373" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1579979709993" />
+    <state width="1638" height="258" key="GridCell.Tab.1.bottom" timestamp="1579955018050">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1579955018050" />
+    <state width="1638" height="390" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1579899540223" />
+    <state width="1638" height="258" key="GridCell.Tab.1.center" timestamp="1579955018049">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1579955018049" />
+    <state width="1638" height="390" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1579899540222" />
+    <state width="1638" height="258" key="GridCell.Tab.1.left" timestamp="1579955018048">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1579955018048" />
+    <state width="1638" height="390" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1579899540221" />
+    <state width="1638" height="258" key="GridCell.Tab.1.right" timestamp="1579955018049">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1579955018049" />
+    <state width="1638" height="390" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1579899540222" />
+    <state x="378" y="188" key="Maven.ArtifactSearchDialog" timestamp="1579891243502">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="378" y="188" key="Maven.ArtifactSearchDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1579891243502" />
+    <state x="349" y="164" width="1132" height="722" key="SettingsEditor" timestamp="1579898981946">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="349" y="164" width="1132" height="722" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1579898981946" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1579975051789">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.0.1680.1050@0.0.1680.1050" timestamp="1579975051789" />
+    <state x="635" y="311" key="chooseDestDirectoryDialog" timestamp="1579890984059">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="635" y="311" key="chooseDestDirectoryDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1579890984059" />
+    <state width="600" height="424" key="javadoc.popup" timestamp="1579899100366">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="600" height="424" key="javadoc.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1579899100366" />
+    <state x="547" y="151" key="refactoring.ChangeSignatureDialog" timestamp="1579894472198">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="547" y="151" key="refactoring.ChangeSignatureDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1579894472198" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1579953744265">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1579953744265" />
+  </component>
+</project>
