@@ -24,7 +24,10 @@ public class GitUml {
     public static void main(String[] args) throws IOException {
         Repository repository = openJGitRepository();
 
-        repository.getRefDatabase().getRefs().stream().forEach(System.out::println);
+        repository.getRefDatabase().getRefs().stream().forEach(ref -> {
+            System.out.println(ref.getName() + ref.getObjectId().name());
+            umlPrinter.registerRef(ref.getName(), ref.getObjectId().name());
+        });
 
         ObjectId lastCommitId = repository.resolve(Constants.HEAD);
         try (RevWalk revWalk = new RevWalk(repository)) {
@@ -38,7 +41,9 @@ public class GitUml {
     @SneakyThrows
     static void recursive(RevCommit commit, Repository repository, RevWalk revWalk, RevCommit child) {
         dumpCommit(commit, repository, child);
-        System.out.println(commit.name() + " ->" + ((child != null) ? child.name() : "top"));
+        if (child != null) {
+            umlPrinter.registerCommitRelation(child.name(), commit.name());
+        }
         Arrays.asList(commit.getParents()).stream()
                 .forEach(cm -> {
                     recursive(getCommit(revWalk, repository, cm), repository, revWalk, commit);
@@ -104,7 +109,7 @@ public class GitUml {
     public static Repository openJGitRepository() throws IOException {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         return builder
-                .setGitDir(new File("/Users/rtsypuk/projects/personal/git/branches/.git"))
+                .setGitDir(new File("/Users/rtsypuk/projects/personal/git/repo/.git"))
                 .build();
     }
 }
