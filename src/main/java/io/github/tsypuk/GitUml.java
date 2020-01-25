@@ -2,10 +2,7 @@ package io.github.tsypuk;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -29,13 +26,18 @@ public class GitUml {
             umlPrinter.registerRef(ref.getName(), ref.getObjectId().name());
         });
 
-        ObjectId lastCommitId = repository.resolve(Constants.HEAD);
+        resolve(repository, repository.resolve(Constants.HEAD));
+        resolve(repository, repository.resolve("c59e17152a12f6e8b080255eb6706d8c8cfb175c"));
+
+        umlPrinter.print();
+    }
+
+    static void resolve(Repository repository, AnyObjectId anyObjectId) throws IOException {
         try (RevWalk revWalk = new RevWalk(repository)) {
-            RevCommit commit = revWalk.parseCommit(lastCommitId);
+            RevCommit commit = revWalk.parseCommit(anyObjectId);
             recursive(commit, repository, revWalk, null);
             revWalk.dispose();
         }
-        umlPrinter.print();
     }
 
     @SneakyThrows

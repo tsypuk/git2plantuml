@@ -28,7 +28,7 @@ public class UmlPrinter {
     Map<String, Tree> trees = new HashMap<>();
     Map<String, Commit> commitMap = new HashMap<>();
 
-    Map<String, List<String>> commitRelations = new HashMap<>();
+    Map<String, Set<String>> commitRelations = new HashMap<>();
 
     Map<String, String> refs = new HashMap<>();
 
@@ -53,11 +53,11 @@ public class UmlPrinter {
     }
 
     public void registerCommitRelation(String sha1, String sha2) {
-        List<String> strings1 = commitRelations.get(sha1);
+        Set<String> strings1 = commitRelations.get(sha1);
         if (strings1 != null) {
             strings1.add(sha2);
         } else {
-            ArrayList<String> commits = new ArrayList<>();
+            Set<String> commits = new HashSet<>();
             commits.add(sha2);
             commitRelations.put(sha1, commits);
         }

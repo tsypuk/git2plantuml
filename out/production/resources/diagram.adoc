@@ -1,6 +1,18 @@
 [plantuml, commit,png, title=commit action, width=1000, height=1000]
 ....
 
+class Commit4 <<(C,yellow)>> {
+-80ffe7fee9eed3dfb418296360514e4611a73a8d
+--
+Merge branch 'feature1'
+
+}
+class Commit3 <<(C,orange)>> {
+-4994d8bbc8a735a0b379ae5cf527160452dee820
+--
+second commit
+
+}
 class Commit2 <<(C,lightblue)>> {
 -c59e17152a12f6e8b080255eb6706d8c8cfb175c
 --
@@ -11,6 +23,21 @@ class Commit1 <<(C,lightgreen)>> {
 -0fa21915cdf35e17519da15e2648bb6670572e88
 --
 first commit
+
+}
+class Tree4 <<(T,yellow)>> {
+-9d3bb9795a60d0aff25c8b753cdc3d00e7f4d041
+--
+# feature.txt 100644 1956e05c9d079888a421954a686e5b5349491189
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+
+}
+class Tree3 <<(T,orange)>> {
+-c8cae1e11b2a67269a95cb3c4f310c01c3ee466e
+--
+# first.txt 100644 9649cde946d8d0896fa80977b9bcd76439f99e6b
+# second.txt 100644 bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
 
 }
 class Tree2 <<(T,lightblue)>> {
@@ -38,14 +65,31 @@ class Blob1 <<(B,lightgreen)>> {
 First line
 
 }
+class Blob3 <<(B,orange)>> {
+-bd11d3a30241a16daa986d2d2bd9df0ffc7d1031
+--
+Second line
+
+}
+Commit4 --|> Tree4
+Commit3 --|> Tree3
 Commit2 --|> Tree2
 Commit1 --|> Tree1
+Tree4 --|> Blob2
+Tree4 --|> Blob1
+Tree4 --|> Blob3
+Tree3 --|> Blob1
+Tree3 --|> Blob3
 Tree2 --|> Blob2
 Tree2 --|> Blob1
 Tree1 --|> Blob1
+Commit4 -l-> Commit3
+Commit4 -l-> Commit2
 Commit2 -l-> Commit1
-note top of Commit2 #lightblue : HEAD
+Commit2 -l-> Commit1
+Commit3 -d-> Commit1
+note top of Commit4 #yellow : HEAD
 note top of Commit2 #lightblue : refs/heads/feature1
-note top of Commit1 #lightgreen : refs/heads/master
+note top of Commit4 #yellow : refs/heads/master
 
 ....
