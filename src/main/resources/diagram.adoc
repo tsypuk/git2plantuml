@@ -91,6 +91,14 @@ class Blob4 <<(B,yellow)>> {
 --
 
 }
+class Tag1 <<(T,red)>> {
+-30fb1381
+--
+v2_annotated
+--
+my annotated tag v2
+}
+Tag1 -d-> Commit4
 Commit5 --> Tree5
 Commit4 --> Tree4
 Commit3 --> Tree3
@@ -113,8 +121,10 @@ Commit4 -l-> Commit3
 Commit2 -l-> Commit1
 Commit3 -l-> Commit1
 Commit5 -l-> Commit4
+
 note top of Commit4 #yellow : HEAD
 note top of Commit2 #lightblue : refs/heads/feature1
+note top of Tag1 #red : refs/tags/v2_annotated
 note top of Commit4 #yellow : refs/heads/master
 note top of Commit4 #yellow : refs/heads/new_branch
 note top of Commit4 #yellow : refs/tags/v1_tag

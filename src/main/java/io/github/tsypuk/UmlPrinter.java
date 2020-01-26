@@ -19,6 +19,7 @@ public class UmlPrinter {
     int commitCounter;
     int blobCounter;
     int treeCounter;
+    int annotatedTagCounter;
 
     int blobMarker;
 
@@ -33,6 +34,8 @@ public class UmlPrinter {
     Map<String, Set<String>> commitRelations = new HashMap<>();
 
     Map<String, String> refs = new HashMap<>();
+
+    Map<String, AnnotatedTag> annotatedTagMap = new HashMap<>();
 
     public void registerCommit(RevCommit commit, RevCommit childCommit) {
         commitCounter++;
@@ -122,6 +125,13 @@ public class UmlPrinter {
 
         drawBlobs();
 
+        drawAnnotatedTags();
+
+        //Annotated Tag-Commit
+        annotatedTagMap.forEach((oid, tag) -> {
+            drawRelation(tag.getTagName(), commitMap.get(tag.getParrentCommitSha1()).getNodeName(), true);
+        });
+
         //Commit->Commit
         commitsList.stream().forEach(commit -> {
             if (commit.getParentCommits().size() > 0) {
@@ -147,10 +157,16 @@ public class UmlPrinter {
         //Branches and Tags (Refs)
         refs.forEach((refName, oid) -> {
             if (commitMap.get(oid) == null) {
-                System.err.println(oid + " NOT FOUND");
-                return;
+                System.err.println(oid + " NOT FOUND in COMMITS");
+                if (annotatedTagMap.get(oid) == null) {
+                    System.err.println(oid + "NOT FOUND in TAGS");
+                    return;
+                } else {
+                    System.out.println("note top of " + annotatedTagMap.get(oid).getTagName() + " #red : " + refName);
+                }
+            } else {
+                System.out.println("note top of " + commitMap.get(oid).getNodeName() + " #" + commitMap.get(oid).getColor() + " : " + refName);
             }
-            System.out.println("note top of " + commitMap.get(oid).getNodeName() + " #" + commitMap.get(oid).getColor() + " : " + refName);
         });
     }
 
@@ -182,6 +198,18 @@ public class UmlPrinter {
         );
     }
 
+    private void drawAnnotatedTags() {
+        annotatedTagMap.forEach((oid, tag) -> {
+            System.out.println("class Tag" + tag.getId() + " <<(T,red)>> {");
+            System.out.println("-" + tag.getOid().substring(0, hashLimit));
+            System.out.println("--");
+            System.out.println(tag.getName());
+            System.out.println("--");
+            System.out.println(tag.getMessage());
+            System.out.println("}");
+        });
+    }
+
     private void drawCommitRelation(String sha1, String sha2) {
         if ((sha1 == null) || (sha2 == null)) {
             return;
@@ -197,12 +225,20 @@ public class UmlPrinter {
         }
     }
 
-    public void drawRefs() {
-
-    }
-
     public void addInfoToTree(String oid, String info) {
         trees.get(oid).setContent(info);
+    }
+
+    public void registerTag(String oid, String tagName, String shortMessage, String parrentCommitSHA1) {
+        annotatedTagCounter++;
+        annotatedTagMap.putIfAbsent(oid, AnnotatedTag.builder()
+                .oid(oid)
+                .id(annotatedTagCounter)
+                .tagName("Tag" + annotatedTagCounter)
+                .name(tagName)
+                .message(shortMessage)
+                .parrentCommitSha1(parrentCommitSHA1)
+                .build());
     }
 }
 
@@ -233,6 +269,17 @@ class Commit {
     public int hashCode() {
         return sha1.hashCode();
     }
+}
+
+@Data
+@Builder
+class AnnotatedTag {
+    private String oid;
+    private int id;
+    private String name;
+    private String tagName;
+    private String message;
+    private String parrentCommitSha1;
 }
 
 @Data
