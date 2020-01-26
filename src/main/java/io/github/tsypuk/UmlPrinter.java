@@ -122,6 +122,7 @@ public class UmlPrinter {
             });
         }
 
+        printUmlHeader();
         //Commit
         commitsList.forEach(drawCommit);
 
@@ -173,19 +174,23 @@ public class UmlPrinter {
                 System.out.println("note top of " + commitMap.get(oid).getNodeName() + " #" + commitMap.get(oid).getColor() + " : " + refName);
             }
         });
+
+        printUmlFooter();
     }
 
     private Consumer<Commit> drawCommit = commit -> {
         System.out.println("class " + commit.getNodeName() + " <<(C," + commit.getColor() + ")>> {");
-        System.out.println("-" + commit.getSha1().substring(0, hashLimit));
+        System.out.println("-sha: " + commit.getSha1().substring(0, hashLimit));
         System.out.println("--");
-        System.out.println(commit.getMessage());
+        System.out.println("message: " + commit.getMessage());
+        System.out.println("--");
+        System.out.println("timestamp: " + commit.getTimeStamp());
         System.out.println("}");
     };
 
     private void drawTree(Tree tree, int id) {
         System.out.println("class Tree" + id + " <<(T," + resolveColor(id - 1) + ")>> {");
-        System.out.println("-" + tree.getSha1().substring(0, hashLimit));
+        System.out.println("-sha: " + tree.getSha1().substring(0, hashLimit));
         System.out.println("--");
         System.out.println(tree.getContent());
         System.out.println("}");
@@ -195,7 +200,7 @@ public class UmlPrinter {
         blobs.stream().forEach(
                 blob -> {
                     System.out.println("class Blob" + blob.getId() + " <<(B," + resolveColor(blob.getId() - 1) + ")>> {");
-                    System.out.println("-" + blob.getSha1().substring(0, hashLimit));
+                    System.out.println("-sha: " + blob.getSha1().substring(0, hashLimit));
                     System.out.println("--");
                     System.out.println(blob.getContent());
                     System.out.println("}");
@@ -206,7 +211,7 @@ public class UmlPrinter {
     private void drawAnnotatedTags() {
         annotatedTagMap.forEach((oid, tag) -> {
             System.out.println("class Tag" + tag.getId() + " <<(T,red)>> {");
-            System.out.println("-" + tag.getOid().substring(0, hashLimit));
+            System.out.println("-sha: " + tag.getOid().substring(0, hashLimit));
             System.out.println("--");
             System.out.println(tag.getName());
             System.out.println("--");
@@ -244,6 +249,27 @@ public class UmlPrinter {
                 .message(shortMessage)
                 .parrentCommitSha1(parrentCommitSHA1)
                 .build());
+    }
+
+    private void printUmlHeader() {
+        StringBuilder title = new StringBuilder()
+                .append("Git repository time snapshot: ")
+                .append(commits.size() + " commits, ")
+                .append(trees.size() + " trees, ")
+                .append(blobs.size() + " blobs, ")
+                .append(refs.size() + " refs: ");
+
+        refs.forEach((refName, ref) -> {
+            title.append(refName);
+            title.append(", ");
+        });
+
+        System.out.println("[plantuml, Git repository time snapshot" + UUID.randomUUID() + ", png, title=\"" + title.toString() + "\", width=1000, height=1000]");
+        System.out.println("....");
+    }
+
+    private void printUmlFooter() {
+        System.out.println("....");
     }
 }
 

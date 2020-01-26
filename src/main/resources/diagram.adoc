@@ -1,179 +1,264 @@
-[plantuml, commit,png, title=commit action, width=1000, height=1000]
+[plantuml, Git repository time snapshotff60a0ac-dd5d-4193-b12c-a5ad96a34f1b, png, title="Git repository time snapshot: 3 commits, 3 trees, 3 blobs, 3 refs: HEAD, refs/heads/master, refs/heads/feature, ", width=1000, height=1000]
 ....
-
-class Commit7 <<(C,orange)>> {
--43e08dfd
---
-added milk
-
-}
-class Commit6 <<(C,lightblue)>> {
--147d0b3e
---
-added lala
-
-}
-class Commit5 <<(C,lightgreen)>> {
--96816051
---
-test commit
-
-}
-class Commit4 <<(C,yellow)>> {
--80ffe7fe
---
-Merge branch 'feature1'
-
-}
 class Commit3 <<(C,orange)>> {
--4994d8bb
+-sha: d44a1050
 --
-second commit
+message: f:2
 
+--
+timestamp: 1580059569
 }
 class Commit2 <<(C,lightblue)>> {
--c59e1715
+-sha: fdf629d7
 --
-feature commit
+message: f:1
 
+--
+timestamp: 1580059533
 }
 class Commit1 <<(C,lightgreen)>> {
--0fa21915
+-sha: 1b7405d6
 --
-first commit
+message: m:1
 
-}
-class Tree7 <<(T,orange)>> {
--0455e9fd
 --
-# feature.txt 100644 1956e05c
-# first.txt 100644 9649cde9
-# lala.txt 100644 e69de29b
-# milk 100644 e69de29b
-# new 100644 e69de29b
-# second.txt 100644 bd11d3a3
-
-}
-class Tree6 <<(T,lightblue)>> {
--742316cd
---
-# feature.txt 100644 1956e05c
-# first.txt 100644 9649cde9
-# lala.txt 100644 e69de29b
-# new 100644 e69de29b
-# second.txt 100644 bd11d3a3
-
-}
-class Tree5 <<(T,lightgreen)>> {
--731152f0
---
-# feature.txt 100644 1956e05c
-# first.txt 100644 9649cde9
-# new 100644 e69de29b
-# second.txt 100644 bd11d3a3
-
-}
-class Tree4 <<(T,yellow)>> {
--9d3bb979
---
-# feature.txt 100644 1956e05c
-# first.txt 100644 9649cde9
-# second.txt 100644 bd11d3a3
-
+timestamp: 1580059460
 }
 class Tree3 <<(T,orange)>> {
--c8cae1e1
+-sha: 62baff6b
 --
-# first.txt 100644 9649cde9
-# second.txt 100644 bd11d3a3
+# feature.txt 100644 16545ff5
+# feature2.txt 100644 80a944a3
+# first.txt 100644 8d0e4123
 
 }
 class Tree2 <<(T,lightblue)>> {
--0a6d2f77
+-sha: 75e47063
 --
-# feature.txt 100644 1956e05c
-# first.txt 100644 9649cde9
+# feature.txt 100644 16545ff5
+# first.txt 100644 8d0e4123
 
 }
 class Tree1 <<(T,lightgreen)>> {
--5b9ddc8f
+-sha: 274e74fc
 --
-# first.txt 100644 9649cde9
-
-}
-class Blob2 <<(B,lightblue)>> {
--1956e05c
---
-Feature
-
-}
-class Blob1 <<(B,lightgreen)>> {
--9649cde9
---
-First line
+# first.txt 100644 8d0e4123
 
 }
 class Blob3 <<(B,orange)>> {
--bd11d3a3
+-sha: 80a944a3
 --
-Second line
+adding feature 2
 
 }
-class Blob4 <<(B,yellow)>> {
--e69de29b
+class Blob2 <<(B,lightblue)>> {
+-sha: 16545ff5
 --
+this is feature file
 
 }
-class Tag1 <<(T,red)>> {
--30fb1381
+class Blob1 <<(B,lightgreen)>> {
+-sha: 8d0e4123
 --
-v2_annotated
---
-my annotated tag v2
+hello git
+
 }
-Tag1 -l-> Commit4
-Commit7 --> Tree7
-Commit6 --> Tree6
-Commit5 --> Tree5
+Commit3 --> Tree3
+Commit2 --> Tree2
+Commit1 --> Tree1
+Tree3 --> Blob2
+Tree3 --> Blob3
+Tree3 --> Blob1
+Tree2 --> Blob2
+Tree2 --> Blob1
+Tree1 --> Blob1
+Commit2 -l-> Commit1
+Commit3 -l-> Commit2
+note top of Commit3 #orange : HEAD
+note top of Commit1 #lightgreen : refs/heads/master
+note top of Commit3 #orange : refs/heads/feature
+....
+
+[plantuml, Git repository time snapshotd68730d0-418f-4472-9e33-361893ba3907, png, title="Git repository time snapshot: 3 commits, 3 trees, 3 blobs, 3 refs: HEAD, refs/heads/master, refs/heads/feature, ", width=1000, height=1000]
+....
+class Commit3 <<(C,orange)>> {
+-sha: d44a1050
+--
+message: f:2
+
+--
+timestamp: 1580059569
+}
+class Commit2 <<(C,lightblue)>> {
+-sha: fdf629d7
+--
+message: f:1
+
+--
+timestamp: 1580059533
+}
+class Commit1 <<(C,lightgreen)>> {
+-sha: 1b7405d6
+--
+message: m:1
+
+--
+timestamp: 1580059460
+}
+class Tree3 <<(T,orange)>> {
+-sha: 62baff6b
+--
+# feature.txt 100644 16545ff5
+# feature2.txt 100644 80a944a3
+# first.txt 100644 8d0e4123
+
+}
+class Tree2 <<(T,lightblue)>> {
+-sha: 75e47063
+--
+# feature.txt 100644 16545ff5
+# first.txt 100644 8d0e4123
+
+}
+class Tree1 <<(T,lightgreen)>> {
+-sha: 274e74fc
+--
+# first.txt 100644 8d0e4123
+
+}
+class Blob3 <<(B,orange)>> {
+-sha: 80a944a3
+--
+adding feature 2
+
+}
+class Blob2 <<(B,lightblue)>> {
+-sha: 16545ff5
+--
+this is feature file
+
+}
+class Blob1 <<(B,lightgreen)>> {
+-sha: 8d0e4123
+--
+hello git
+
+}
+Commit3 --> Tree3
+Commit2 --> Tree2
+Commit1 --> Tree1
+Tree3 --> Blob2
+Tree3 --> Blob3
+Tree3 --> Blob1
+Tree2 --> Blob2
+Tree2 --> Blob1
+Tree1 --> Blob1
+Commit2 -l-> Commit1
+Commit3 -l-> Commit2
+note top of Commit3 #orange : HEAD
+note top of Commit3 #orange : refs/heads/master
+note top of Commit3 #orange : refs/heads/feature
+....
+
+[plantuml, Git repository time snapshot9df66bb3-a4d1-406b-a7b4-0a62e6daa4d5, png, title="Git repository time snapshot: 4 commits, 3 trees, 3 blobs, 3 refs: HEAD, refs/heads/master, refs/heads/feature, ", width=1000, height=1000]
+....
+class Commit4 <<(C,yellow)>> {
+-sha: 7140a77d
+--
+message: Merge branch 'feature'
+
+--
+timestamp: 1580059698
+}
+class Commit3 <<(C,orange)>> {
+-sha: d44a1050
+--
+message: f:2
+
+--
+timestamp: 1580059569
+}
+class Commit2 <<(C,lightblue)>> {
+-sha: fdf629d7
+--
+message: f:1
+
+--
+timestamp: 1580059533
+}
+class Commit1 <<(C,lightgreen)>> {
+-sha: 1b7405d6
+--
+message: m:1
+
+--
+timestamp: 1580059460
+}
+class Tree4 <<(T,yellow)>> {
+-sha: 62baff6b
+--
+# feature.txt 100644 16545ff5
+# feature2.txt 100644 80a944a3
+# first.txt 100644 8d0e4123
+
+}
+class Tree3 <<(T,orange)>> {
+-sha: 62baff6b
+--
+# feature.txt 100644 16545ff5
+# feature2.txt 100644 80a944a3
+# first.txt 100644 8d0e4123
+
+}
+class Tree2 <<(T,lightblue)>> {
+-sha: 75e47063
+--
+# feature.txt 100644 16545ff5
+# first.txt 100644 8d0e4123
+
+}
+class Tree1 <<(T,lightgreen)>> {
+-sha: 274e74fc
+--
+# first.txt 100644 8d0e4123
+
+}
+class Blob3 <<(B,orange)>> {
+-sha: 80a944a3
+--
+adding feature 2
+
+}
+class Blob2 <<(B,lightblue)>> {
+-sha: 16545ff5
+--
+this is feature file
+
+}
+class Blob1 <<(B,lightgreen)>> {
+-sha: 8d0e4123
+--
+hello git
+
+}
 Commit4 --> Tree4
 Commit3 --> Tree3
 Commit2 --> Tree2
 Commit1 --> Tree1
-Tree7 --> Blob2
-Tree7 --> Blob1
-Tree7 --> Blob4
-Tree7 --> Blob4
-Tree7 --> Blob4
-Tree7 --> Blob3
-Tree6 --> Blob2
-Tree6 --> Blob1
-Tree6 --> Blob4
-Tree6 --> Blob4
-Tree6 --> Blob3
-Tree5 --> Blob2
-Tree5 --> Blob1
-Tree5 --> Blob4
-Tree5 --> Blob3
 Tree4 --> Blob2
-Tree4 --> Blob1
 Tree4 --> Blob3
-Tree3 --> Blob1
+Tree4 --> Blob1
+Tree3 --> Blob2
 Tree3 --> Blob3
+Tree3 --> Blob1
 Tree2 --> Blob2
 Tree2 --> Blob1
 Tree1 --> Blob1
-Commit6 -l-> Commit5
-Commit4 -l-> Commit2
-Commit4 -l-> Commit3
-Commit7 -l-> Commit6
 Commit2 -l-> Commit1
-Commit5 -l-> Commit4
-Commit3 -l-> Commit1
-note top of Commit7 #orange : HEAD
-note top of Commit2 #lightblue : refs/heads/feature1
-note top of Tag1 #red : refs/tags/v2_annotated
-note top of Commit7 #orange : refs/heads/master
-note top of Commit4 #yellow : refs/heads/new_branch
-note top of Commit4 #yellow : refs/tags/v1_tag
-
+Commit4 -l-> Commit1
+Commit4 -l-> Commit3
+Commit3 -l-> Commit2
+note top of Commit4 #yellow : HEAD
+note top of Commit4 #yellow : refs/heads/master
+note top of Commit3 #orange : refs/heads/feature
 ....

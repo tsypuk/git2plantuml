@@ -33,7 +33,9 @@ public class GitUml {
 
         resolve(repository, repository.resolve(Constants.HEAD));
 //        resolve(repository, repository.resolve("c59e17152a12f6e8b080255eb6706d8c8cfb175c"));
-        resolve(repository, repository.resolve("9681605"));
+//        resolve(repository, repository.resolve("23f73fa3ba852c2168a0ed49d72be74f8cf427b6"));
+//        resolve(repository, repository.resolve("c86fa2c2cf08d35a4eea5939fc9b54f5f27f1549"));
+//        resolve(repository, repository.resolve("9681605"));
 //        System.err.println("TAGS=====");
         resolveTags(repository);
 //        System.err.println("TAGS=====");
@@ -47,10 +49,6 @@ public class GitUml {
                     if (tag.getPeeledObjectId() != null) {
                         try (RevWalk revWalk = new RevWalk(repository)) {
                             RevTag revTag = revWalk.parseTag(tag.getObjectId());
-                            System.err.println(tag.getPeeledObjectId().name());
-                            System.err.println(revTag.getTagName());
-                            System.err.println(revTag.getShortMessage());
-                            System.err.println(tag.getObjectId().name());
                             umlPrinter.registerTag(tag.getObjectId().name(), revTag.getTagName(), revTag.getShortMessage(), tag.getPeeledObjectId().name());
                         } catch (Exception e) {
                             System.err.println(e);
