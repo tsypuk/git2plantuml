@@ -25,7 +25,7 @@ public class UmlPrinter {
 
     public static final int hashLimit = 8;
 
-    List<String> colors = Arrays.asList("lightgreen", "lightblue", "orange", "yellow", "red", "blue", "cyen");
+    List<String> colors = Arrays.asList("lightgreen", "lightblue", "orange", "yellow", "pink");
     Set<Commit> commits = new HashSet<>();
     Set<Blob> blobs = new HashSet<>();
     Map<String, Tree> trees = new HashMap<>();
@@ -98,6 +98,11 @@ public class UmlPrinter {
         activeTr.getBlobs().add(blob);
     }
 
+    private String resolveColor(int index) {
+        int id = index % (colors.size() - 1);
+        return colors.get(id);
+    }
+
     public void print() {
         blobCounter = 0;
         List<Commit> commitsList = new ArrayList<>(commits);
@@ -106,7 +111,7 @@ public class UmlPrinter {
             Commit commit = commitsList.get(i);
             commit.setNodeName("Commit" + (commitsList.size() - i));
             commit.setId(commitsList.size() - i);
-            commit.setColor(colors.get(commitsList.size() - i - 1));
+            commit.setColor(resolveColor(commitsList.size() - i - 1));
             Tree tree = commit.getTree();
             tree.setTreeName("Tree" + (commitsList.size() - i));
             tree.getBlobs().forEach(blob -> {
@@ -179,7 +184,7 @@ public class UmlPrinter {
     };
 
     private void drawTree(Tree tree, int id) {
-        System.out.println("class Tree" + id + " <<(T," + colors.get(id - 1) + ")>> {");
+        System.out.println("class Tree" + id + " <<(T," + resolveColor(id - 1) + ")>> {");
         System.out.println("-" + tree.getSha1().substring(0, hashLimit));
         System.out.println("--");
         System.out.println(tree.getContent());
@@ -189,7 +194,7 @@ public class UmlPrinter {
     private void drawBlobs() {
         blobs.stream().forEach(
                 blob -> {
-                    System.out.println("class Blob" + blob.getId() + " <<(B," + colors.get(blob.getId() - 1) + ")>> {");
+                    System.out.println("class Blob" + blob.getId() + " <<(B," + resolveColor(blob.getId() - 1) + ")>> {");
                     System.out.println("-" + blob.getSha1().substring(0, hashLimit));
                     System.out.println("--");
                     System.out.println(blob.getContent());

@@ -1,7 +1,19 @@
 [plantuml, commit,png, title=commit action, width=1000, height=1000]
 ....
 
-class Commit5 <<(C,red)>> {
+class Commit7 <<(C,orange)>> {
+-43e08dfd
+--
+added milk
+
+}
+class Commit6 <<(C,lightblue)>> {
+-147d0b3e
+--
+added lala
+
+}
+class Commit5 <<(C,lightgreen)>> {
 -96816051
 --
 test commit
@@ -31,7 +43,28 @@ class Commit1 <<(C,lightgreen)>> {
 first commit
 
 }
-class Tree5 <<(T,red)>> {
+class Tree7 <<(T,orange)>> {
+-0455e9fd
+--
+# feature.txt 100644 1956e05c
+# first.txt 100644 9649cde9
+# lala.txt 100644 e69de29b
+# milk 100644 e69de29b
+# new 100644 e69de29b
+# second.txt 100644 bd11d3a3
+
+}
+class Tree6 <<(T,lightblue)>> {
+-742316cd
+--
+# feature.txt 100644 1956e05c
+# first.txt 100644 9649cde9
+# lala.txt 100644 e69de29b
+# new 100644 e69de29b
+# second.txt 100644 bd11d3a3
+
+}
+class Tree5 <<(T,lightgreen)>> {
 -731152f0
 --
 # feature.txt 100644 1956e05c
@@ -98,12 +131,25 @@ v2_annotated
 --
 my annotated tag v2
 }
-Tag1 -d-> Commit4
+Tag1 -l-> Commit4
+Commit7 --> Tree7
+Commit6 --> Tree6
 Commit5 --> Tree5
 Commit4 --> Tree4
 Commit3 --> Tree3
 Commit2 --> Tree2
 Commit1 --> Tree1
+Tree7 --> Blob2
+Tree7 --> Blob1
+Tree7 --> Blob4
+Tree7 --> Blob4
+Tree7 --> Blob4
+Tree7 --> Blob3
+Tree6 --> Blob2
+Tree6 --> Blob1
+Tree6 --> Blob4
+Tree6 --> Blob4
+Tree6 --> Blob3
 Tree5 --> Blob2
 Tree5 --> Blob1
 Tree5 --> Blob4
@@ -116,16 +162,17 @@ Tree3 --> Blob3
 Tree2 --> Blob2
 Tree2 --> Blob1
 Tree1 --> Blob1
+Commit6 -l-> Commit5
 Commit4 -l-> Commit2
 Commit4 -l-> Commit3
+Commit7 -l-> Commit6
 Commit2 -l-> Commit1
-Commit3 -l-> Commit1
 Commit5 -l-> Commit4
-
-note top of Commit4 #yellow : HEAD
+Commit3 -l-> Commit1
+note top of Commit7 #orange : HEAD
 note top of Commit2 #lightblue : refs/heads/feature1
 note top of Tag1 #red : refs/tags/v2_annotated
-note top of Commit4 #yellow : refs/heads/master
+note top of Commit7 #orange : refs/heads/master
 note top of Commit4 #yellow : refs/heads/new_branch
 note top of Commit4 #yellow : refs/tags/v1_tag
 
