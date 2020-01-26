@@ -22,6 +22,8 @@ public class UmlPrinter {
 
     int blobMarker;
 
+    public static final int hashLimit = 8;
+
     List<String> colors = Arrays.asList("lightgreen", "lightblue", "orange", "yellow", "red", "blue", "cyen");
     Set<Commit> commits = new HashSet<>();
     Set<Blob> blobs = new HashSet<>();
@@ -154,7 +156,7 @@ public class UmlPrinter {
 
     private Consumer<Commit> drawCommit = commit -> {
         System.out.println("class " + commit.getNodeName() + " <<(C," + commit.getColor() + ")>> {");
-        System.out.println("-" + commit.getSha1());
+        System.out.println("-" + commit.getSha1().substring(0, hashLimit));
         System.out.println("--");
         System.out.println(commit.getMessage());
         System.out.println("}");
@@ -162,7 +164,7 @@ public class UmlPrinter {
 
     private void drawTree(Tree tree, int id) {
         System.out.println("class Tree" + id + " <<(T," + colors.get(id - 1) + ")>> {");
-        System.out.println("-" + tree.getSha1());
+        System.out.println("-" + tree.getSha1().substring(0, hashLimit));
         System.out.println("--");
         System.out.println(tree.getContent());
         System.out.println("}");
@@ -172,7 +174,7 @@ public class UmlPrinter {
         blobs.stream().forEach(
                 blob -> {
                     System.out.println("class Blob" + blob.getId() + " <<(B," + colors.get(blob.getId() - 1) + ")>> {");
-                    System.out.println("-" + blob.getSha1());
+                    System.out.println("-" + blob.getSha1().substring(0, hashLimit));
                     System.out.println("--");
                     System.out.println(blob.getContent());
                     System.out.println("}");
@@ -191,7 +193,7 @@ public class UmlPrinter {
         if (left) {
             System.out.println(object1 + " -l-> " + object2);
         } else {
-            System.out.println(object1 + " --|> " + object2);
+            System.out.println(object1 + " --> " + object2);
         }
     }
 

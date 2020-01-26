@@ -1,12 +1,6 @@
 [plantuml, commit,png, title=commit action, width=1000, height=1000]
 ....
 
-class Commit5 <<(C,red)>> {
--96816051
---
-test commit
-
-}
 class Commit4 <<(C,yellow)>> {
 -80ffe7fe
 --
@@ -29,15 +23,6 @@ class Commit1 <<(C,lightgreen)>> {
 -0fa21915
 --
 first commit
-
-}
-class Tree5 <<(T,red)>> {
--731152f0
---
-# feature.txt 100644 1956e05c
-# first.txt 100644 9649cde9
-# new 100644 e69de29b
-# second.txt 100644 bd11d3a3
 
 }
 class Tree4 <<(T,yellow)>> {
@@ -86,37 +71,28 @@ class Blob3 <<(B,orange)>> {
 Second line
 
 }
-class Blob4 <<(B,yellow)>> {
--e69de29b
---
+Commit4 --|> Tree4
+Commit3 --|> Tree3
+Commit2 --|> Tree2
+Commit1 --|> Tree1
+Tree4 --|> Blob2
+Tree4 --|> Blob1
+Tree4 --|> Blob3
+Tree3 --|> Blob1
+Tree3 --|> Blob3
+Tree2 --|> Blob2
+Tree2 --|> Blob1
+Tree1 --|> Blob1
 
-}
-Commit5 --> Tree5
-Commit4 --> Tree4
-Commit3 --> Tree3
-Commit2 --> Tree2
-Commit1 --> Tree1
-Tree5 --> Blob2
-Tree5 --> Blob1
-Tree5 --> Blob4
-Tree5 --> Blob3
-Tree4 --> Blob2
-Tree4 --> Blob1
-Tree4 --> Blob3
-Tree3 --> Blob1
-Tree3 --> Blob3
-Tree2 --> Blob2
-Tree2 --> Blob1
-Tree1 --> Blob1
-Commit4 -l-> Commit2
-Commit4 -l-> Commit3
-Commit2 -l-> Commit1
-Commit3 -l-> Commit1
-Commit5 -l-> Commit4
+Commit1 <-down- Commit2
+Commit1 <- Commit3
+Commit2 <- Commit4
+Commit3 <- Commit4
+Commit2 -[hidden]-> Commit1
+
 note top of Commit4 #yellow : HEAD
 note top of Commit2 #lightblue : refs/heads/feature1
 note top of Commit4 #yellow : refs/heads/master
-note top of Commit4 #yellow : refs/heads/new_branch
 note top of Commit4 #yellow : refs/tags/v1_tag
 
 ....

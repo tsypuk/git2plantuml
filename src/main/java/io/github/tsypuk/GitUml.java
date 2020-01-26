@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -13,6 +14,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.List;
+
+import static io.github.tsypuk.UmlPrinter.hashLimit;
+import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 @Slf4j
 public class GitUml {
@@ -27,10 +32,36 @@ public class GitUml {
         });
 
         resolve(repository, repository.resolve(Constants.HEAD));
-        resolve(repository, repository.resolve("c59e17152a12f6e8b080255eb6706d8c8cfb175c"));
-
+//        resolve(repository, repository.resolve("c59e17152a12f6e8b080255eb6706d8c8cfb175c"));
+        resolve(repository, repository.resolve("9681605"));
+        System.err.println("TAGS=====");
+        resolveTags(repository);
+        System.err.println("TAGS=====");
         umlPrinter.print();
     }
+
+    static void resolveTags(Repository repository) throws IOException {
+        List<Ref> tags = repository.getRefDatabase().getRefsByPrefix(R_TAGS);
+        tags.forEach(tag -> {
+                    //annotated
+                    if (tag.getPeeledObjectId() != null) {
+                        try (RevWalk revWalk = new RevWalk(repository)) {
+                            RevTag revTag = revWalk.parseTag(tag.getObjectId());
+                            System.err.println(revTag.getTagName());
+                            System.err.println(revTag.getFullMessage());
+                            System.err.println(tag.getObjectId().name());
+                        } catch (Exception e) {
+                            System.err.println(e);
+                        }
+                    }
+                }
+        );
+    }
+    /*
+    Map<String, Ref> tags = repository.getTags()
+    ref = repository.peel(ref)
+    ObjectId taggedObject = ref.getObjectId();
+     */
 
     static void resolve(Repository repository, AnyObjectId anyObjectId) throws IOException {
         try (RevWalk revWalk = new RevWalk(repository)) {
@@ -81,7 +112,7 @@ public class GitUml {
                         .append(" ")
                         .append(treeWalk.getFileMode(0))
                         .append(" ")
-                        .append(treeWalk.getObjectId(0).name())
+                        .append(treeWalk.getObjectId(0).name().substring(0, hashLimit))
                         .append("\n");
                 loader = repository.open(objectId);
                 OutputStream output = getStream();
