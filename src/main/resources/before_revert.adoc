@@ -1,0 +1,121 @@
+[plantuml, Git repository time snapshot00008bd3-2bf4-4ae5-b2b3-13bb3574ef71, png, title="Git repository time snapshot: 2 commits, 2 trees, 2 blobs, 3 refs: HEAD, refs/heads/master, refs/heads/feature, ", width=1000, height=1000]
+....
+class Commit2 <<(C,lightblue)>> {
+-sha: 0a835626
+--
+message: rev
+
+--
+timestamp: 1580073401
+}
+class Commit1 <<(C,lightgreen)>> {
+-sha: 1b7405d6
+--
+message: m:1
+
+--
+timestamp: 1580059460
+}
+class Tree2 <<(T,lightblue)>> {
+-sha: dab4b2ae
+--
+# first.txt 100644 8d0e4123
+# rever.txt 100644 a04a59a5
+
+}
+class Tree1 <<(T,lightgreen)>> {
+-sha: 274e74fc
+--
+# first.txt 100644 8d0e4123
+
+}
+class Blob2 <<(B,lightblue)>> {
+-sha: a04a59a5
+--
+revert commit
+
+}
+class Blob1 <<(B,lightgreen)>> {
+-sha: 8d0e4123
+--
+hello git
+
+}
+Commit2 --> Tree2
+Commit1 --> Tree1
+Tree2 --> Blob1
+Tree2 --> Blob2
+Tree1 --> Blob1
+Commit2 -l-> Commit1
+note top of Commit2 #lightblue : HEAD
+note top of Commit2 #lightblue : refs/heads/master
+....
+
+== Revert complete
+
+
+
+[plantuml, Git repository time snapshot0670e69e-a824-4662-a5c5-f973acb4bc49, png, title="Git repository time snapshot: 3 commits, 2 trees, 2 blobs, 3 refs: HEAD, refs/heads/master, refs/heads/feature, ", width=1000, height=1000]
+....
+class Commit3 <<(C,orange)>> {
+-sha: 56435df0
+--
+message: Revert "rev"
+
+This reverts commit 0a8356261af88faab5f0ff81e4afc461378de311.
+
+--
+timestamp: 1580073598
+}
+class Commit2 <<(C,lightblue)>> {
+-sha: 0a835626
+--
+message: rev
+
+--
+timestamp: 1580073401
+}
+class Commit1 <<(C,lightgreen)>> {
+-sha: 1b7405d6
+--
+message: m:1
+
+--
+timestamp: 1580059460
+}
+class Tree1 <<(T,lightgreen)>> {
+-sha: 274e74fc
+--
+# first.txt 100644 8d0e4123
+
+}
+class Tree2 <<(T,lightblue)>> {
+-sha: dab4b2ae
+--
+# first.txt 100644 8d0e4123
+# rever.txt 100644 a04a59a5
+
+}
+class Blob2 <<(B,lightblue)>> {
+-sha: a04a59a5
+--
+revert commit
+
+}
+class Blob1 <<(B,lightgreen)>> {
+-sha: 8d0e4123
+--
+hello git
+
+}
+Commit3 --> Tree1
+Commit2 --> Tree2
+Commit1 --> Tree1
+Tree1 --> Blob1
+Tree2 --> Blob1
+Tree2 --> Blob2
+Commit2 -l-> Commit1
+Commit3 -l-> Commit2
+note top of Commit3 #orange : HEAD
+note top of Commit3 #orange : refs/heads/master
+....

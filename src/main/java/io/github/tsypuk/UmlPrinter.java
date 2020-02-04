@@ -11,8 +11,6 @@ public class UmlPrinter {
     boolean inCommit;
     String activeCommit;
     Commit activeCm;
-    boolean inTree;
-    String activeTree;
     Tree activeTr;
     Blob activeBlob;
 
@@ -69,17 +67,20 @@ public class UmlPrinter {
     }
 
     public void dumpTree(String sha1, String content) {
-        treeCounter++;
-        inTree = true;
-        activeTree = "Tree" + treeCounter;
-        Tree tree = Tree.builder()
-                .sha1(sha1)
-                .content(content)
-                .blobs(new ArrayList<>())
-                .build();
+        Tree tree = trees.get(sha1);
+        if (tree == null) {
+            treeCounter++;
+            tree = Tree.builder()
+                    .sha1(sha1)
+//                    .id(treeCounter)
+//                    .treeName("Tree" + treeCounter)
+                    .content(content)
+                    .blobs(new ArrayList<>())
+                    .build();
+            trees.put(sha1, tree);
+        }
         activeTr = tree;
         activeCm.setTree(tree);
-        trees.put(sha1, tree);
     }
 
     public void dumpBlob(String sha1, String content) {
@@ -87,7 +88,6 @@ public class UmlPrinter {
                 .sha1(sha1)
                 .content(content)
                 .build();
-
 
         if (!blobs.contains(blob)) {
             blobCounter++;
@@ -113,7 +113,11 @@ public class UmlPrinter {
             commit.setId(commitsList.size() - i);
             commit.setColor(resolveColor(commitsList.size() - i - 1));
             Tree tree = commit.getTree();
-            tree.setTreeName("Tree" + (commitsList.size() - i));
+            if (tree.getId() == 0) {
+                tree.setId(commit.getId());
+                tree.setTreeName("Tree" + tree.getId());
+            }
+//            tree.setTreeName("Tree" + (commitsList.size() - i));
             tree.getBlobs().forEach(blob -> {
                 if (blob.getId() == 0) {
                     blob.setBlobName("Blob" + ++blobMarker);
@@ -127,7 +131,10 @@ public class UmlPrinter {
         commitsList.forEach(drawCommit);
 
         //Tree
-        commitsList.stream().forEach(commit -> drawTree(commit.getTree(), commit.getId()));
+        commitsList.stream()
+                .map(Commit::getTree)
+                .distinct()
+                .forEach(this::drawTree);
 
         drawBlobs();
 
@@ -150,13 +157,17 @@ public class UmlPrinter {
         commitsList.stream().forEach(commit -> drawRelation(commit.getNodeName(), commit.getTree().getTreeName(), false));
 
         //Tree-Blob
-        commitsList.stream().forEach(commit -> {
-            Tree tree = commit.getTree();
-            tree.getBlobs().stream().forEach(blob -> {
-                        drawRelation(tree.getTreeName(), blob.getBlobName(), false);
-                    }
-            );
-        });
+        commitsList.stream()
+                .map(commit -> commit.getTree())
+                .distinct()
+                .forEach(tree -> {
+                    tree.getBlobs().stream()
+                            .distinct()
+                            .forEach(blob -> {
+                                        drawRelation(tree.getTreeName(), blob.getBlobName(), false);
+                                    }
+                            );
+                });
 
         commitRelations.forEach((parent, childList) -> childList.stream().forEach(child -> drawCommitRelation(parent, child)));
 
@@ -188,8 +199,8 @@ public class UmlPrinter {
         System.out.println("}");
     };
 
-    private void drawTree(Tree tree, int id) {
-        System.out.println("class Tree" + id + " <<(T," + resolveColor(id - 1) + ")>> {");
+    private void drawTree(Tree tree) {
+        System.out.println("class Tree" + tree.getId() + " <<(T," + resolveColor(tree.getId() - 1) + ")>> {");
         System.out.println("-sha: " + tree.getSha1().substring(0, hashLimit));
         System.out.println("--");
         System.out.println(tree.getContent());
@@ -321,6 +332,21 @@ class Tree {
     private String treeName;
     private String content;
     private List<Blob> blobs;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tree)) return false;
+
+        Tree tree = (Tree) o;
+
+        return sha1.equals(tree.sha1);
+    }
+
+    @Override
+    public int hashCode() {
+        return sha1.hashCode();
+    }
 }
 
 @Data
