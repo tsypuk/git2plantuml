@@ -22,29 +22,46 @@ import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 @Slf4j
 public class GitUml {
-    static UmlPrinter umlPrinter = new UmlPrinter();
-    static Set<ObjectId> processedCommits = new HashSet<>();
-    static GitConfig config;
+    private UmlPrinter umlPrinter = new UmlPrinter();
+    private Set<ObjectId> processedCommits = new HashSet<>();
+    private GitConfig config;
+    private Repository repository;
 
     public static void main(String[] args) throws IOException {
-        ConfigService configService = new ConfigService();
-        config = configService.loadConfig();
-        Repository repository = openJGitRepository(config.getRepoPath());
 
+        GitUml gitUml = new GitUml();
+        gitUml.loadConfig();
+        gitUml.showAllRefs();
+        gitUml.resolveObjects();
+        gitUml.printAll();
+    }
+
+    private void printAll() {
+        umlPrinter.print(config);
+    }
+
+    public void loadConfig() throws IOException {
+        ConfigService configService = new ConfigService();
+        this.config = configService.loadConfig();
+        this.repository = openJGitRepository(config.getRepoPath());
+    }
+
+    private void showAllRefs() throws IOException {
         repository.getRefDatabase().getRefs().stream().forEach(ref -> {
             System.out.println(ref.getName() + ref.getObjectId().name());
             umlPrinter.registerRef(ref.getName(), ref.getObjectId().name());
         });
+    }
 
+    public void resolveObjects() {
         resolve(repository, Constants.HEAD);
         config.getResolve().stream().forEach(path -> resolve(repository, path));
 
         resolveTags(repository);
-        umlPrinter.print(config);
     }
 
     @SneakyThrows
-    static void resolveTags(Repository repository) {
+    private void resolveTags(Repository repository) {
         List<Ref> tags = repository.getRefDatabase().getRefsByPrefix(R_TAGS);
         tags.forEach(tag -> {
                     //annotated
@@ -61,7 +78,7 @@ public class GitUml {
     }
 
     @SneakyThrows
-    static void resolve(Repository repository, String object) {
+    private void resolve(Repository repository, String object) {
         AnyObjectId anyObjectId = repository.resolve(object);
         try (RevWalk revWalk = new RevWalk(repository)) {
             RevCommit commit = revWalk.parseCommit(anyObjectId);
@@ -71,7 +88,7 @@ public class GitUml {
     }
 
     @SneakyThrows
-    static void recursive(RevCommit commit, Repository repository, RevWalk revWalk, RevCommit child) {
+    private void recursive(RevCommit commit, Repository repository, RevWalk revWalk, RevCommit child) {
         dumpCommit(commit, repository);
         if (child != null) {
             umlPrinter.registerCommitRelation(child.name(), commit.name());
@@ -83,12 +100,12 @@ public class GitUml {
     }
 
     @SneakyThrows
-    static RevCommit getCommit(RevWalk revWal, Repository repository, RevCommit revCommit) {
+    private RevCommit getCommit(RevWalk revWal, Repository repository, RevCommit revCommit) {
         return revWal.parseCommit(repository.resolve(revCommit.name()));
     }
 
 
-    static public void dumpCommit(RevCommit commit, Repository repository) throws IOException {
+    private void dumpCommit(RevCommit commit, Repository repository) throws IOException {
         ObjectId commitOid = commit.getId();
         if (!processedCommits.contains(commitOid)) {
             umlPrinter.registerCommit(commit);
@@ -127,7 +144,7 @@ public class GitUml {
         }
     }
 
-    public static OutputStream getStream() {
+    private static OutputStream getStream() {
         return new OutputStream() {
             private StringBuilder string = new StringBuilder();
 
@@ -142,7 +159,7 @@ public class GitUml {
         };
     }
 
-    public static Repository openJGitRepository(String repoPath) throws IOException {
+    private static Repository openJGitRepository(String repoPath) throws IOException {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         return builder
                 .setGitDir(new File(repoPath + "/.git"))

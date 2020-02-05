@@ -17,7 +17,7 @@ public class ConfigService {
 
     private GitConfig gitConfig = new GitConfig();
 
-    GitConfig loadConfig() throws FileNotFoundException {
+    public GitConfig loadConfig() throws FileNotFoundException {
         Yaml yaml = new Yaml();
         InputStream ios = new FileInputStream(new File("config.yml"));
         Map<String, Object> obj = yaml.load(ios);

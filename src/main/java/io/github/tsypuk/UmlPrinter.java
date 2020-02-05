@@ -74,8 +74,6 @@ public class UmlPrinter {
             treeCounter++;
             tree = Tree.builder()
                     .sha1(sha1)
-//                    .id(treeCounter)
-//                    .treeName("Tree" + treeCounter)
                     .content(content)
                     .blobs(new ArrayList<>())
                     .build();
@@ -120,7 +118,6 @@ public class UmlPrinter {
                 tree.setId(commit.getId());
                 tree.setTreeName("Tree" + tree.getId());
             }
-//            tree.setTreeName("Tree" + (commitsList.size() - i));
             tree.getBlobs().forEach(blob -> {
                 if (blob.getId() == 0) {
                     blob.setBlobName("Blob" + ++blobMarker);
@@ -196,7 +193,7 @@ public class UmlPrinter {
     }
 
     private Stream<Blob> checkDistinct(Stream<Blob> stream, boolean flag) {
-        return (flag) ? stream.distinct(): stream;
+        return (flag) ? stream.distinct() : stream;
     }
 
     private void openCenterHtml() {
