@@ -3,7 +3,6 @@ repo-path: "/tmp/gitexplore"
 show-branches: true
 show-tree-blob: true
 single-arrow-tree: false
+hash-limit: 8
 resolve:
   - "master"
-  - "f4c5c68f"
-  - "d7d886a1"

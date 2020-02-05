@@ -18,18 +18,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.tsypuk.UmlPrinter.hashLimit;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 @Slf4j
 public class GitUml {
     static UmlPrinter umlPrinter = new UmlPrinter();
     static Set<ObjectId> processedCommits = new HashSet<>();
+    static GitConfig config;
 
     public static void main(String[] args) throws IOException {
         ConfigService configService = new ConfigService();
-        GitConfig config = configService.loadConfig();
-        Repository repository = openJGitRepository(config.repoPath);
+        config = configService.loadConfig();
+        Repository repository = openJGitRepository(config.getRepoPath());
 
         repository.getRefDatabase().getRefs().stream().forEach(ref -> {
             System.out.println(ref.getName() + ref.getObjectId().name());
@@ -113,7 +113,7 @@ public class GitUml {
                             .append(" ")
                             .append(treeWalk.getFileMode(0))
                             .append(" ")
-                            .append(treeWalk.getObjectId(0).name().substring(0, hashLimit))
+                            .append(treeWalk.getObjectId(0).name().substring(0, config.getHashLimit()))
                             .append("\n");
                     loader = repository.open(objectId);
                     OutputStream output = getStream();

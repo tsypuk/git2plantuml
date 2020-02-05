@@ -1,4 +1,4 @@
-[plantuml, 441049cd-a519-4313-9b80-6986248e4e8e, png, title="Git repository snapshot: 4 commits, 4 trees, 2 blobs, 2 refs: HEAD,refs/heads/master", width=1000, height=1000]
+[plantuml, 3fee64d9-237c-4723-8b26-b7e22d189cbb, png, title="Git repository snapshot: 4 commits, 4 trees, 2 blobs, 2 refs: HEAD,refs/heads/master", width=1000, height=1000]
 ....
 class Commit4 <<(C,yellow)>> {
 -sha: 1d07434f

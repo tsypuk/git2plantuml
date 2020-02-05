@@ -25,8 +25,6 @@ public class UmlPrinter {
 
     int blobMarker;
 
-    public static final int hashLimit = 8;
-
     List<String> colors = Arrays.asList("lightgreen", "lightblue", "orange", "yellow", "pink");
     Set<Commit> commits = new HashSet<>();
     Set<Blob> blobs = new HashSet<>();
@@ -217,7 +215,7 @@ public class UmlPrinter {
 
     private Consumer<Commit> drawCommit = commit -> {
         System.out.println("class " + commit.getNodeName() + " <<(C," + commit.getColor() + ")>> {");
-        System.out.println("-sha: " + commit.getSha1().substring(0, hashLimit));
+        System.out.println("-sha: " + commit.getSha1().substring(0, config.getHashLimit()));
         System.out.println("--");
         System.out.println("message: " + commit.getMessage());
         System.out.println("--");
@@ -227,7 +225,7 @@ public class UmlPrinter {
 
     private void drawTree(Tree tree) {
         System.out.println("class Tree" + tree.getId() + " <<(T," + resolveColor(tree.getId() - 1) + ")>> {");
-        System.out.println("-sha: " + tree.getSha1().substring(0, hashLimit));
+        System.out.println("-sha: " + tree.getSha1().substring(0, config.getHashLimit()));
         System.out.println("--");
         System.out.println(tree.getContent());
         System.out.println("}");
@@ -237,7 +235,7 @@ public class UmlPrinter {
         blobs.stream().forEach(
                 blob -> {
                     System.out.println("class Blob" + blob.getId() + " <<(B," + resolveColor(blob.getId() - 1) + ")>> {");
-                    System.out.println("-sha: " + blob.getSha1().substring(0, hashLimit));
+                    System.out.println("-sha: " + blob.getSha1().substring(0, config.getHashLimit()));
                     System.out.println("--");
                     System.out.println(blob.getContent());
                     System.out.println("}");
@@ -248,7 +246,7 @@ public class UmlPrinter {
     private void drawAnnotatedTags() {
         annotatedTagMap.forEach((oid, tag) -> {
             System.out.println("class Tag" + tag.getId() + " <<(T,red)>> {");
-            System.out.println("-sha: " + tag.getOid().substring(0, hashLimit));
+            System.out.println("-sha: " + tag.getOid().substring(0, config.getHashLimit()));
             System.out.println("--");
             System.out.println(tag.getName());
             System.out.println("--");

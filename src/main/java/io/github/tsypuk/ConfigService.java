@@ -25,6 +25,7 @@ public class ConfigService {
         gitConfig.setShowBranches((Boolean) obj.get("show-branches"));
         gitConfig.setShowTreeBlob((Boolean) obj.get("show-tree-blob"));
         gitConfig.setSingleArrowTree((Boolean) obj.get("single-arrow-tree"));
+        gitConfig.setHashLimit((Integer) obj.get("hash-limit"));
         gitConfig.setResolve((List<String>) obj.get("resolve"));
         return gitConfig;
     }
@@ -38,5 +39,6 @@ class GitConfig {
     boolean showBranches;
     boolean showTreeBlob;
     boolean singleArrowTree;
+    int hashLimit;
     List<String> resolve = new ArrayList<>();
 }
