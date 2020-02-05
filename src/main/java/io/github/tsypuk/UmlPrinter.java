@@ -39,7 +39,7 @@ public class UmlPrinter {
 
     Map<String, AnnotatedTag> annotatedTagMap = new HashMap<>();
 
-    public void registerCommit(RevCommit commit, RevCommit childCommit) {
+    public void registerCommit(RevCommit commit) {
         commitCounter++;
         inCommit = true;
         activeCommit = "Commit" + commitCounter;

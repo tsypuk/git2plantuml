@@ -5,4 +5,5 @@ show-tree-blob: true
 single-arrow-tree: false
 resolve:
   - "master"
-#  - "6998e7eb3196e5002b98eb4b409768aceaf5dd4f"
+  - "f4c5c68f"
+  - "d7d886a1"

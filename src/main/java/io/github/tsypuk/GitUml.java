@@ -14,7 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static io.github.tsypuk.UmlPrinter.hashLimit;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
@@ -22,6 +24,7 @@ import static org.eclipse.jgit.lib.Constants.R_TAGS;
 @Slf4j
 public class GitUml {
     static UmlPrinter umlPrinter = new UmlPrinter();
+    static Set<ObjectId> processedCommits = new HashSet<>();
 
     public static void main(String[] args) throws IOException {
         ConfigService configService = new ConfigService();
@@ -34,7 +37,6 @@ public class GitUml {
         });
 
         resolve(repository, Constants.HEAD);
-
         config.getResolve().stream().forEach(path -> resolve(repository, path));
 
         resolveTags(repository);
@@ -70,7 +72,7 @@ public class GitUml {
 
     @SneakyThrows
     static void recursive(RevCommit commit, Repository repository, RevWalk revWalk, RevCommit child) {
-        dumpCommit(commit, repository, child);
+        dumpCommit(commit, repository);
         if (child != null) {
             umlPrinter.registerCommitRelation(child.name(), commit.name());
         }
@@ -86,38 +88,42 @@ public class GitUml {
     }
 
 
-    static public void dumpCommit(RevCommit commit, Repository repository, RevCommit child) throws IOException {
-        umlPrinter.registerCommit(commit, child);
-        RevTree tree = commit.getTree();
-        ObjectLoader loader = repository.open(tree);
-        OutputStream outputStream = getStream();
-        loader.copyTo(outputStream);
-        umlPrinter.dumpTree(tree.name(), outputStream.toString());
+    static public void dumpCommit(RevCommit commit, Repository repository) throws IOException {
+        ObjectId commitOid = commit.getId();
+        if (!processedCommits.contains(commitOid)) {
+            umlPrinter.registerCommit(commit);
+            RevTree tree = commit.getTree();
+            ObjectLoader loader = repository.open(tree);
+            OutputStream outputStream = getStream();
+            loader.copyTo(outputStream);
+            umlPrinter.dumpTree(tree.name(), outputStream.toString());
 
-        StringBuilder treeinfo = new StringBuilder();
-        try (TreeWalk treeWalk = new TreeWalk(repository)) {
-            treeWalk.addTree(tree);
-            treeWalk.setRecursive(true);
+            StringBuilder treeinfo = new StringBuilder();
+            try (TreeWalk treeWalk = new TreeWalk(repository)) {
+                treeWalk.addTree(tree);
+                treeWalk.setRecursive(true);
 
-            while (treeWalk.next()) {
-                ObjectId objectId = treeWalk.getObjectId(0);
-                if (objectId.name().equals("0000000000000000000000000000000000000000")) {
-                    break;
+                while (treeWalk.next()) {
+                    ObjectId objectId = treeWalk.getObjectId(0);
+                    if (objectId.name().equals("0000000000000000000000000000000000000000")) {
+                        break;
+                    }
+                    treeinfo.append("# ")
+                            .append(treeWalk.getPathString())
+                            .append(" ")
+                            .append(treeWalk.getFileMode(0))
+                            .append(" ")
+                            .append(treeWalk.getObjectId(0).name().substring(0, hashLimit))
+                            .append("\n");
+                    loader = repository.open(objectId);
+                    OutputStream output = getStream();
+                    loader.copyTo(output);
+                    umlPrinter.dumpBlob(objectId.name(), output.toString());
                 }
-                treeinfo.append("# ")
-                        .append(treeWalk.getPathString())
-                        .append(" ")
-                        .append(treeWalk.getFileMode(0))
-                        .append(" ")
-                        .append(treeWalk.getObjectId(0).name().substring(0, hashLimit))
-                        .append("\n");
-                loader = repository.open(objectId);
-                OutputStream output = getStream();
-                loader.copyTo(output);
-                umlPrinter.dumpBlob(objectId.name(), output.toString());
+                // Update tree with filename, mdoe and oid
+                umlPrinter.addInfoToTree(tree.name(), treeinfo.toString());
             }
-            // Update tree with filename, mdoe and oid
-            umlPrinter.addInfoToTree(tree.name(), treeinfo.toString());
+            processedCommits.add(commitOid);
         }
     }
 
