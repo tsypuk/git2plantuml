@@ -38,7 +38,7 @@ public class GitUml {
         config.getResolve().stream().forEach(path -> resolve(repository, path));
 
         resolveTags(repository);
-        umlPrinter.print(config.detailed);
+        umlPrinter.print(config);
     }
 
     @SneakyThrows

@@ -1,166 +1,104 @@
-[plantuml, Git repository time snapshot322fe3a8-3e11-499e-ae31-61ddc93cf22f, png, title="Git repository snapshot: 6 commits, 6 trees, 5 blobs, 4 refs: HEAD, refs/heads/master, refs/remotes/origin/HEAD, refs/remotes/origin/master, ", width=1000, height=1000]
+[plantuml, c9e2881b-ef46-4c93-8dcc-eb7093007631, png, title="Git repository snapshot: 4 commits, 4 trees, 2 blobs, 2 refs: HEAD,refs/heads/master", width=1000, height=1000]
 ....
-class Commit6 <<(C,lightblue)>> {
--sha: 76fa6caf
---
-message: sr
-
---
-timestamp: 1580847919
-}
-class Commit5 <<(C,lightgreen)>> {
--sha: 4fbd2383
---
-message: one more
-
---
-timestamp: 1580847899
-}
 class Commit4 <<(C,yellow)>> {
--sha: 24e29617
+-sha: 1d07434f
 --
-message: added forth.txt
+message: fourth commit
 
 --
-timestamp: 1580840054
+timestamp: 1580907742
 }
 class Commit3 <<(C,orange)>> {
--sha: 849d8fba
+-sha: d7d886a1
 --
-message: added third.txt
+message: third commit
 
 --
-timestamp: 1580813902
+timestamp: 1580905514
 }
 class Commit2 <<(C,lightblue)>> {
--sha: 993bb5b5
+-sha: 85e66be9
 --
-message: added seond.txt
+message: second commit
 
 --
-timestamp: 1580813162
+timestamp: 1580904953
 }
 class Commit1 <<(C,lightgreen)>> {
--sha: 0d38698f
+-sha: f4c5c68f
 --
-message: added first.txt
+message: first commit
 
 --
-timestamp: 1580812884
-}
-class Tree6 <<(T,lightblue)>> {
--sha: 1c5cc3ae
---
-# first.txt 100644 795ddc40
-# forth.txt 100644 0b7fbcdb
-# seconf.txt 100644 0ba93614
-# sr 100644 e69de29b
-# third.txt 100644 da13a9b8
-# tt 100644 e69de29b
-
-}
-class Tree5 <<(T,lightgreen)>> {
--sha: 1144f43e
---
-# first.txt 100644 795ddc40
-# forth.txt 100644 0b7fbcdb
-# seconf.txt 100644 0ba93614
-# third.txt 100644 da13a9b8
-# tt 100644 e69de29b
-
+timestamp: 1580904123
 }
 class Tree4 <<(T,yellow)>> {
--sha: b47a18ae
+-sha: a5ed01df
 --
-# first.txt 100644 795ddc40
-# forth.txt 100644 0b7fbcdb
-# seconf.txt 100644 0ba93614
-# third.txt 100644 da13a9b8
+# first.txt 100644 7d914532
+# second.txt 100644 9649cde9
+# third.txt 100644 9649cde9
 
 }
 class Tree3 <<(T,orange)>> {
--sha: 34f58182
+-sha: d49117a7
 --
-# first.txt 100644 795ddc40
-# seconf.txt 100644 0ba93614
-# third.txt 100644 da13a9b8
+# first.txt 100644 9649cde9
+# second.txt 100644 9649cde9
+# third.txt 100644 9649cde9
 
 }
 class Tree2 <<(T,lightblue)>> {
--sha: 22e61880
+-sha: 73d4372b
 --
-# first.txt 100644 795ddc40
-# seconf.txt 100644 0ba93614
+# first.txt 100644 9649cde9
+# second.txt 100644 9649cde9
 
 }
 class Tree1 <<(T,lightgreen)>> {
--sha: 3d800e5a
+-sha: 5b9ddc8f
 --
-# first.txt 100644 795ddc40
-
-}
-class Blob4 <<(B,yellow)>> {
--sha: 0b7fbcdb
---
-FourthData
-
-}
-class Blob3 <<(B,orange)>> {
--sha: da13a9b8
---
-ThirdData
+# first.txt 100644 9649cde9
 
 }
 class Blob1 <<(B,lightgreen)>> {
--sha: 795ddc40
+-sha: 9649cde9
 --
-FirstData
+First line
 
 }
 class Blob2 <<(B,lightblue)>> {
--sha: 0ba93614
+-sha: 7d914532
 --
-SecondData
+First line
+Second line
 
 }
-class Blob5 <<(B,lightgreen)>> {
--sha: e69de29b
---
-
-}
-Commit6 --> Tree6
-Commit5 --> Tree5
 Commit4 --> Tree4
 Commit3 --> Tree3
 Commit2 --> Tree2
 Commit1 --> Tree1
-Tree6 --> Blob1
-Tree6 --> Blob4
-Tree6 --> Blob2
-Tree6 --> Blob5
-Tree6 --> Blob3
-Tree5 --> Blob1
-Tree5 --> Blob4
-Tree5 --> Blob2
-Tree5 --> Blob3
-Tree5 --> Blob5
-Tree4 --> Blob1
-Tree4 --> Blob4
 Tree4 --> Blob2
-Tree4 --> Blob3
+Tree4 --> Blob1
+Tree4 --> Blob1
+Tree4 --> Blob2
+Tree4 --> Blob1
+Tree4 --> Blob1
 Tree3 --> Blob1
-Tree3 --> Blob2
-Tree3 --> Blob3
+Tree3 --> Blob1
+Tree3 --> Blob1
+Tree3 --> Blob1
+Tree3 --> Blob1
+Tree3 --> Blob1
 Tree2 --> Blob1
-Tree2 --> Blob2
+Tree2 --> Blob1
+Tree2 --> Blob1
+Tree2 --> Blob1
 Tree1 --> Blob1
-Commit6 -l-> Commit5
-Commit3 -l-> Commit2
+Tree1 --> Blob1
 Commit2 -l-> Commit1
-Commit5 -l-> Commit4
 Commit4 -l-> Commit3
-note top of Commit2 #lightblue : HEAD
-note top of Commit2 #lightblue : refs/heads/master
-note top of Commit6 #lightblue : refs/remotes/origin/HEAD
-note top of Commit6 #lightblue : refs/remotes/origin/master
+Commit3 -l-> Commit2
+note top of Commit4 #yellow : HEAD
+note top of Commit4 #yellow : refs/heads/master
 ....

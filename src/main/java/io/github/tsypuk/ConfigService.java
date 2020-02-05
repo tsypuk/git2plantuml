@@ -1,7 +1,6 @@
 package io.github.tsypuk;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.yaml.snakeyaml.Yaml;
@@ -22,8 +21,10 @@ public class ConfigService {
         Yaml yaml = new Yaml();
         InputStream ios = new FileInputStream(new File("config.yml"));
         Map<String, Object> obj = yaml.load(ios);
-        gitConfig.setRepoPath((String) obj.get("repoPath"));
-        gitConfig.setDetailed((Boolean) obj.get("detailed"));
+        gitConfig.setRepoPath((String) obj.get("repo-path"));
+        gitConfig.setShowBranches((Boolean) obj.get("show-branches"));
+        gitConfig.setShowTreeBlob((Boolean) obj.get("show-tree-blob"));
+        gitConfig.setSingleArrowTree((Boolean) obj.get("single-arrow-tree"));
         gitConfig.setResolve((List<String>) obj.get("resolve"));
         return gitConfig;
     }
@@ -34,6 +35,8 @@ public class ConfigService {
 @NoArgsConstructor
 class GitConfig {
     String repoPath;
-    boolean detailed;
+    boolean showBranches;
+    boolean showTreeBlob;
+    boolean singleArrowTree;
     List<String> resolve = new ArrayList<>();
 }

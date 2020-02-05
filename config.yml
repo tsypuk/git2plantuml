@@ -1,5 +1,8 @@
-repoPath: "/tmp/gitexplore"
-detailed: true
+repo-path: "/tmp/gitexplore"
+# split detailed into more configurable parameters
+show-branches: true
+show-tree-blob: true
+single-arrow-tree: false
 resolve:
-  - "origin/master"
+  - "master"
 #  - "6998e7eb3196e5002b98eb4b409768aceaf5dd4f"
