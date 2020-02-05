@@ -264,7 +264,7 @@ public class UmlPrinter {
 
     private void printUmlHeader() {
         StringBuilder title = new StringBuilder()
-                .append("Git repository time snapshot: ")
+                .append("Git repository snapshot: ")
                 .append(commits.size() + " commits, ")
                 .append(trees.size() + " trees, ")
                 .append(blobs.size() + " blobs, ")

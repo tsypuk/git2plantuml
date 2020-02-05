@@ -32,7 +32,8 @@ public class GitUml {
         });
 
         resolve(repository, repository.resolve(Constants.HEAD));
-//        resolve(repository, repository.resolve("993bb5b58455f0e92dc8311fef8e6b961d68c0c0"));
+        resolve(repository, repository.resolve("origin/master"));
+//        resolve(repository, repository.resolve("6998e7eb3196e5002b98eb4b409768aceaf5dd4f"));
 //        resolve(repository, repository.resolve("c59e17152a12f6e8b080255eb6706d8c8cfb175c"));
 //        resolve(repository, repository.resolve("23f73fa3ba852c2168a0ed49d72be74f8cf427b6"));
 //        resolve(repository, repository.resolve("c86fa2c2cf08d35a4eea5939fc9b54f5f27f1549"));
@@ -143,7 +144,7 @@ public class GitUml {
     public static Repository openJGitRepository() throws IOException {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         return builder
-                .setGitDir(new File("/Users/rtsypuk/projects/personal/git/repo/.git"))
+                .setGitDir(new File("/tmp/gitexplore/.git"))
                 .build();
     }
 }
