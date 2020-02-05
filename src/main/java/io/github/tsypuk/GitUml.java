@@ -144,7 +144,7 @@ public class GitUml {
         }
     }
 
-    private static OutputStream getStream() {
+    private OutputStream getStream() {
         return new OutputStream() {
             private StringBuilder string = new StringBuilder();
 
@@ -159,7 +159,7 @@ public class GitUml {
         };
     }
 
-    private static Repository openJGitRepository(String repoPath) throws IOException {
+    private Repository openJGitRepository(String repoPath) throws IOException {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         return builder
                 .setGitDir(new File(repoPath + "/.git"))
