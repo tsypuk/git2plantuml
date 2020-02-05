@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 
 public class UmlPrinter {
     boolean inCommit;
+    boolean detailed;
+
     String activeCommit;
     Commit activeCm;
     Tree activeTr;
@@ -103,7 +105,8 @@ public class UmlPrinter {
         return colors.get(id);
     }
 
-    public void print() {
+    public void print(boolean detailed) {
+        this.detailed = detailed;
         blobCounter = 0;
         List<Commit> commitsList = new ArrayList<>(commits);
         commitsList.sort(Comparator.comparingInt(Commit::getTimeStamp).reversed());
@@ -130,21 +133,22 @@ public class UmlPrinter {
         //Commit
         commitsList.forEach(drawCommit);
 
-        //Tree
-        commitsList.stream()
-                .map(Commit::getTree)
-                .distinct()
-                .forEach(this::drawTree);
+        if (detailed) {
+            //Tree
+            commitsList.stream()
+                    .map(Commit::getTree)
+                    .distinct()
+                    .forEach(this::drawTree);
 
-        drawBlobs();
+            drawBlobs();
 
-        drawAnnotatedTags();
+            drawAnnotatedTags();
 
-        //Annotated Tag-Commit
-        annotatedTagMap.forEach((oid, tag) -> {
-            drawRelation(tag.getTagName(), commitMap.get(tag.getParrentCommitSha1()).getNodeName(), true);
-        });
-
+            //Annotated Tag-Commit
+            annotatedTagMap.forEach((oid, tag) -> {
+                drawRelation(tag.getTagName(), commitMap.get(tag.getParrentCommitSha1()).getNodeName(), true);
+            });
+        }
         //Commit->Commit
         commitsList.stream().forEach(commit -> {
             if (commit.getParentCommits().size() > 0) {
@@ -153,22 +157,23 @@ public class UmlPrinter {
             }
         });
 
-        //Commit->Tree
-        commitsList.stream().forEach(commit -> drawRelation(commit.getNodeName(), commit.getTree().getTreeName(), false));
+        if (detailed) {
+            //Commit->Tree
+            commitsList.stream().forEach(commit -> drawRelation(commit.getNodeName(), commit.getTree().getTreeName(), false));
 
-        //Tree-Blob
-        commitsList.stream()
-                .map(commit -> commit.getTree())
-                .distinct()
-                .forEach(tree -> {
-                    tree.getBlobs().stream()
-                            .distinct()
-                            .forEach(blob -> {
-                                        drawRelation(tree.getTreeName(), blob.getBlobName(), false);
-                                    }
-                            );
-                });
-
+            //Tree-Blob
+            commitsList.stream()
+                    .map(commit -> commit.getTree())
+                    .distinct()
+                    .forEach(tree -> {
+                        tree.getBlobs().stream()
+                                .distinct()
+                                .forEach(blob -> {
+                                            drawRelation(tree.getTreeName(), blob.getBlobName(), false);
+                                        }
+                                );
+                    });
+        }
         commitRelations.forEach((parent, childList) -> childList.stream().forEach(child -> drawCommitRelation(parent, child)));
 
         //Branches and Tags (Refs)
@@ -265,10 +270,10 @@ public class UmlPrinter {
     private void printUmlHeader() {
         StringBuilder title = new StringBuilder()
                 .append("Git repository snapshot: ")
-                .append(commits.size() + " commits, ")
-                .append(trees.size() + " trees, ")
-                .append(blobs.size() + " blobs, ")
-                .append(refs.size() + " refs: ");
+                .append(commits.size()).append(" commits, ")
+                .append(trees.size()).append(" trees, ")
+                .append(blobs.size()).append(" blobs, ")
+                .append(refs.size()).append(" refs: ");
 
         refs.forEach((refName, ref) -> {
             title.append(refName);

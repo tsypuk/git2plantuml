@@ -1,0 +1,5 @@
+repoPath: "/tmp/gitexplore"
+detailed: true
+resolve:
+  - "origin/master"
+#  - "6998e7eb3196e5002b98eb4b409768aceaf5dd4f"

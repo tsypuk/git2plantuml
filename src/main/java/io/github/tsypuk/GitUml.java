@@ -24,27 +24,25 @@ public class GitUml {
     static UmlPrinter umlPrinter = new UmlPrinter();
 
     public static void main(String[] args) throws IOException {
-        Repository repository = openJGitRepository();
+        ConfigService configService = new ConfigService();
+        GitConfig config = configService.loadConfig();
+        Repository repository = openJGitRepository(config.repoPath);
 
         repository.getRefDatabase().getRefs().stream().forEach(ref -> {
             System.out.println(ref.getName() + ref.getObjectId().name());
             umlPrinter.registerRef(ref.getName(), ref.getObjectId().name());
         });
 
-        resolve(repository, repository.resolve(Constants.HEAD));
-        resolve(repository, repository.resolve("origin/master"));
-//        resolve(repository, repository.resolve("6998e7eb3196e5002b98eb4b409768aceaf5dd4f"));
-//        resolve(repository, repository.resolve("c59e17152a12f6e8b080255eb6706d8c8cfb175c"));
-//        resolve(repository, repository.resolve("23f73fa3ba852c2168a0ed49d72be74f8cf427b6"));
-//        resolve(repository, repository.resolve("c86fa2c2cf08d35a4eea5939fc9b54f5f27f1549"));
-//        resolve(repository, repository.resolve("9681605"));
-//        System.err.println("TAGS=====");
+        resolve(repository, Constants.HEAD);
+
+        config.getResolve().stream().forEach(path -> resolve(repository, path));
+
         resolveTags(repository);
-//        System.err.println("TAGS=====");
-        umlPrinter.print();
+        umlPrinter.print(config.detailed);
     }
 
-    static void resolveTags(Repository repository) throws IOException {
+    @SneakyThrows
+    static void resolveTags(Repository repository) {
         List<Ref> tags = repository.getRefDatabase().getRefsByPrefix(R_TAGS);
         tags.forEach(tag -> {
                     //annotated
@@ -53,19 +51,16 @@ public class GitUml {
                             RevTag revTag = revWalk.parseTag(tag.getObjectId());
                             umlPrinter.registerTag(tag.getObjectId().name(), revTag.getTagName(), revTag.getShortMessage(), tag.getPeeledObjectId().name());
                         } catch (Exception e) {
-                            System.err.println(e);
+                            log.error(e.getMessage());
                         }
                     }
                 }
         );
     }
-    /*
-    Map<String, Ref> tags = repository.getTags()
-    ref = repository.peel(ref)
-    ObjectId taggedObject = ref.getObjectId();
-     */
 
-    static void resolve(Repository repository, AnyObjectId anyObjectId) throws IOException {
+    @SneakyThrows
+    static void resolve(Repository repository, String object) {
+        AnyObjectId anyObjectId = repository.resolve(object);
         try (RevWalk revWalk = new RevWalk(repository)) {
             RevCommit commit = revWalk.parseCommit(anyObjectId);
             recursive(commit, repository, revWalk, null);
@@ -141,10 +136,10 @@ public class GitUml {
         };
     }
 
-    public static Repository openJGitRepository() throws IOException {
+    public static Repository openJGitRepository(String repoPath) throws IOException {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         return builder
-                .setGitDir(new File("/tmp/gitexplore/.git"))
+                .setGitDir(new File(repoPath + "/.git"))
                 .build();
     }
 }
