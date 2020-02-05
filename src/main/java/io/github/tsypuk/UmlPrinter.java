@@ -25,7 +25,7 @@ public class UmlPrinter {
 
     int blobMarker;
 
-    List<String> colors = Arrays.asList("lightgreen", "lightblue", "orange", "yellow", "pink");
+    List<String> colors = Arrays.asList("lightgreen", "lightblue", "orange", "yellow", "pink", "red");
     Set<Commit> commits = new HashSet<>();
     Set<Blob> blobs = new HashSet<>();
     Map<String, Tree> trees = new HashMap<>();
@@ -99,7 +99,7 @@ public class UmlPrinter {
     }
 
     private String resolveColor(int index) {
-        int id = index % (colors.size() - 1);
+        int id = index % (colors.size());
         return colors.get(id);
     }
 
@@ -122,6 +122,7 @@ public class UmlPrinter {
                 if (blob.getId() == 0) {
                     blob.setBlobName("Blob" + ++blobMarker);
                     blob.setId(blobMarker);
+                    blob.setColor(commit.getColor());
                 }
             });
         }
@@ -231,7 +232,7 @@ public class UmlPrinter {
     private void drawBlobs() {
         blobs.stream().forEach(
                 blob -> {
-                    System.out.println("class Blob" + blob.getId() + " <<(B," + resolveColor(blob.getId() - 1) + ")>> {");
+                    System.out.println("class Blob" + blob.getId() + " <<(B," + blob.getColor() + ")>> {");
                     System.out.println("-sha: " + blob.getSha1().substring(0, config.getHashLimit()));
                     System.out.println("--");
                     System.out.println(blob.getContent());
@@ -374,6 +375,7 @@ class Blob {
     private int id;
     private String blobName;
     private String content;
+    private String color;
 
     @Override
     public boolean equals(Object o) {
