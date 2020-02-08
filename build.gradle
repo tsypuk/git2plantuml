@@ -15,4 +15,5 @@ dependencies {
     implementation 'org.eclipse.jgit:org.eclipse.jgit:5.6.0.201912101111-r'
     implementation 'org.projectlombok:lombok:1.18.10'
     implementation 'org.yaml:snakeyaml:1.25'
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
 }

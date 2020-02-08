@@ -1,13 +1,8 @@
-[plantuml, ea71d96f-03bf-4147-872f-3cc0bc12ca08, png, title="Git repository snapshot: 5 commits, 5 trees, 3 blobs, 2 refs: HEAD,refs/heads/master", width=1000, height=1000]
+++++
+<center>
+++++
+[plantuml, 01c05812-3dc7-427d-bec3-6a1bc8754b85, png, title="Git repository snapshot: 4 commits, 4 trees, 2 blobs, 2 refs: HEAD,refs/heads/master", width=1000, height=1000]
 ....
-class Commit5 <<(C,pink)>> {
--sha: fe0eddd9
---
-message: fifth commit
-
---
-timestamp: 1580924421
-}
 class Commit4 <<(C,yellow)>> {
 -sha: 6611f7fa
 --
@@ -39,14 +34,6 @@ message: first commit
 
 --
 timestamp: 1580924369
-}
-class Tree5 <<(T,pink)>> {
--sha: 3cfa938b
---
-# first.txt 100644 6da4d3e0
-# second.txt 100644 9649cde9
-# third.txt 100644 9649cde9
-
 }
 class Tree4 <<(T,yellow)>> {
 -sha: a5ed01df
@@ -83,14 +70,6 @@ class Blob1 <<(B,lightgreen)>> {
 First line
 
 }
-class Blob3 <<(B,pink)>> {
--sha: 6da4d3e0
---
-First line
-Second line
-Third line
-
-}
 class Blob2 <<(B,yellow)>> {
 -sha: 7d914532
 --
@@ -98,14 +77,10 @@ First line
 Second line
 
 }
-Commit5 --> Tree5
 Commit4 --> Tree4
 Commit3 --> Tree3
 Commit2 --> Tree2
 Commit1 --> Tree1
-Tree5 --> Blob3
-Tree5 --> Blob1
-Tree5 --> Blob1
 Tree4 --> Blob2
 Tree4 --> Blob1
 Tree4 --> Blob1
@@ -117,8 +92,10 @@ Tree2 --> Blob1
 Tree1 --> Blob1
 Commit4 -l-> Commit3
 Commit3 -l-> Commit2
-Commit5 -l-> Commit4
 Commit2 -l-> Commit1
-note top of Commit5 #pink : HEAD
-note top of Commit5 #pink : refs/heads/master
+note top of Commit4 #yellow : HEAD
+note top of Commit4 #yellow : refs/heads/master
 ....
+++++
+</center>
+++++

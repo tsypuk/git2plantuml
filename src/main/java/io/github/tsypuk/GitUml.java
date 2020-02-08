@@ -28,7 +28,6 @@ public class GitUml {
     private Repository repository;
 
     public static void main(String[] args) throws IOException {
-
         GitUml gitUml = new GitUml();
         gitUml.loadConfig();
         gitUml.showAllRefs();
@@ -48,7 +47,7 @@ public class GitUml {
 
     private void showAllRefs() throws IOException {
         repository.getRefDatabase().getRefs().stream().forEach(ref -> {
-            System.out.println(ref.getName() + ref.getObjectId().name());
+            log.info(ref.getName() + ref.getObjectId().name());
             umlPrinter.registerRef(ref.getName(), ref.getObjectId().name());
         });
     }
@@ -56,7 +55,6 @@ public class GitUml {
     public void resolveObjects() {
         resolve(repository, Constants.HEAD);
         config.getResolve().stream().forEach(path -> resolve(repository, path));
-
         resolveTags(repository);
     }
 

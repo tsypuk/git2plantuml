@@ -1,5 +1,4 @@
 repo-path: "/tmp/gitexplore"
-# split detailed into more configurable parameters
 show-branches: true
 show-tree-blob: true
 single-arrow-tree: false
