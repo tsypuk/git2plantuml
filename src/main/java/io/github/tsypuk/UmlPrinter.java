@@ -1,10 +1,13 @@
 package io.github.tsypuk;
 
+import io.github.tsypuk.core.AnnotatedTag;
+import io.github.tsypuk.core.Blob;
+import io.github.tsypuk.core.Commit;
+import io.github.tsypuk.core.Tree;
 import io.github.tsypuk.writer.ConsoleOutput;
+import io.github.tsypuk.writer.JekyllFileWriter;
 import io.github.tsypuk.writer.PlantUMLFileWriter;
 import io.github.tsypuk.writer.ResultsWriter;
-import lombok.Builder;
-import lombok.Data;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.util.*;
@@ -14,7 +17,11 @@ import java.util.stream.Stream;
 
 public class UmlPrinter {
 
-    List<ResultsWriter> resultsWriters = List.of(new PlantUMLFileWriter(), new ConsoleOutput());
+    List<ResultsWriter> resultsWriters = List.of(
+            new PlantUMLFileWriter(),
+            new JekyllFileWriter(),
+            new ConsoleOutput()
+    );
     boolean inCommit;
     GitConfig config;
 
@@ -182,6 +189,7 @@ public class UmlPrinter {
     private void print(String text) {
         resultsWriters.forEach(it -> it.writeOutput(text));
     }
+
     private Consumer<Commit> drawCommit = commit -> {
         print("class " + commit.getNodeName() + " <<(C," + commit.getColor() + ")>> {");
         print("-sha: " + commit.getSha1().substring(0, config.getHashLimit()));
@@ -252,106 +260,4 @@ public class UmlPrinter {
         resultsWriters.forEach(it -> it.startSection("[plantuml, " + UUID.randomUUID() + ", png, title=\"" + title.toString() + "\", width=1000, height=1000]"));
     }
 
-}
-
-@Data
-@Builder
-class Commit {
-    private String sha1;
-    private int timeStamp;
-    private int id;
-    private String nodeName;
-    private String content;
-    private String message;
-    private String color;
-    private Tree tree;
-    private List<String> parentCommits;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Commit)) {
-            return false;
-        }
-
-        Commit commit = (Commit) o;
-
-        return sha1.equals(commit.sha1);
-    }
-
-    @Override
-    public int hashCode() {
-        return sha1.hashCode();
-    }
-}
-
-@Data
-@Builder
-class AnnotatedTag {
-    private String oid;
-    private int id;
-    private String name;
-    private String tagName;
-    private String message;
-    private String parrentCommitSha1;
-}
-
-@Data
-@Builder
-class Tree {
-    private String sha1;
-    private int id;
-    private String treeName;
-    private String content;
-    private List<Blob> blobs;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Tree)) {
-            return false;
-        }
-
-        Tree tree = (Tree) o;
-
-        return sha1.equals(tree.sha1);
-    }
-
-    @Override
-    public int hashCode() {
-        return sha1.hashCode();
-    }
-}
-
-@Data
-@Builder
-class Blob {
-    private String sha1;
-    private int id;
-    private String blobName;
-    private String content;
-    private String color;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Blob)) {
-            return false;
-        }
-
-        Blob blob = (Blob) o;
-
-        return sha1.equals(blob.sha1);
-    }
-
-    @Override
-    public int hashCode() {
-        return sha1.hashCode();
-    }
 }

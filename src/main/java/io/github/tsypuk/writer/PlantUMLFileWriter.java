@@ -1,5 +1,7 @@
 package io.github.tsypuk.writer;
 
+import lombok.SneakyThrows;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,7 +9,14 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class PlantUMLFileWriter implements ResultsWriter {
-    Path path = Paths.get("/tmp/result.plantuml");
+    Path path;
+
+    @SneakyThrows
+    public PlantUMLFileWriter() {
+        path = Paths.get("/tmp/result.plantuml");
+        Files.deleteIfExists(path);
+        Files.createFile(path);
+    }
 
     @Override
     public void startSection(String metadata) {
