@@ -1,5 +1,8 @@
 package io.github.tsypuk;
 
+import io.github.tsypuk.writer.ConsoleOutput;
+import io.github.tsypuk.writer.PlantUMLFileWriter;
+import io.github.tsypuk.writer.ResultsWriter;
 import lombok.Builder;
 import lombok.Data;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -10,6 +13,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class UmlPrinter {
+
+    List<ResultsWriter> resultsWriters = List.of(new PlantUMLFileWriter(), new ConsoleOutput());
     boolean inCommit;
     GitConfig config;
 
@@ -41,12 +46,7 @@ public class UmlPrinter {
         commitCounter++;
         inCommit = true;
         activeCommit = "Commit" + commitCounter;
-        Commit commitToAdd = Commit.builder()
-                .sha1(commit.name())
-                .parentCommits(new ArrayList<>())
-                .message(commit.getFullMessage())
-                .timeStamp(commit.getCommitTime())
-                .build();
+        Commit commitToAdd = Commit.builder().sha1(commit.name()).parentCommits(new ArrayList<>()).message(commit.getFullMessage()).timeStamp(commit.getCommitTime()).build();
         commits.add(commitToAdd);
         activeCm = commitToAdd;
 
@@ -72,11 +72,7 @@ public class UmlPrinter {
         Tree tree = trees.get(sha1);
         if (tree == null) {
             treeCounter++;
-            tree = Tree.builder()
-                    .sha1(sha1)
-                    .content(content)
-                    .blobs(new ArrayList<>())
-                    .build();
+            tree = Tree.builder().sha1(sha1).content(content).blobs(new ArrayList<>()).build();
             trees.put(sha1, tree);
         }
         activeTr = tree;
@@ -84,10 +80,7 @@ public class UmlPrinter {
     }
 
     public void dumpBlob(String sha1, String content) {
-        Blob blob = Blob.builder()
-                .sha1(sha1)
-                .content(content)
-                .build();
+        Blob blob = Blob.builder().sha1(sha1).content(content).build();
 
         if (!blobs.contains(blob)) {
             blobCounter++;
@@ -127,17 +120,13 @@ public class UmlPrinter {
             });
         }
 
-        openCenterHtml();
         printUmlHeader();
         //Commit
         commitsList.forEach(drawCommit);
 
         if (config.isShowTreeBlob()) {
             //Tree
-            commitsList.stream()
-                    .map(Commit::getTree)
-                    .distinct()
-                    .forEach(this::drawTree);
+            commitsList.stream().map(Commit::getTree).distinct().forEach(this::drawTree);
 
             drawBlobs();
         }
@@ -151,8 +140,7 @@ public class UmlPrinter {
         //Commit->Commit
         commitsList.stream().forEach(commit -> {
             if (commit.getParentCommits().size() > 0) {
-                commit.getParentCommits().forEach(
-                        parentCommit -> drawRelation(commit.getNodeName(), parentCommit, false));
+                commit.getParentCommits().forEach(parentCommit -> drawRelation(commit.getNodeName(), parentCommit, false));
             }
         });
 
@@ -161,14 +149,9 @@ public class UmlPrinter {
             commitsList.stream().forEach(commit -> drawRelation(commit.getNodeName(), commit.getTree().getTreeName(), false));
 
             //Tree-Blob
-            commitsList.stream()
-                    .map(commit -> commit.getTree())
-                    .distinct()
-                    .forEach(tree -> checkDistinct(tree.getBlobs().stream(), config.isSingleArrowTree())
-                            .forEach(blob -> {
-                                        drawRelation(tree.getTreeName(), blob.getBlobName(), false);
-                                    }
-                            ));
+            commitsList.stream().map(commit -> commit.getTree()).distinct().forEach(tree -> checkDistinct(tree.getBlobs().stream(), config.isSingleArrowTree()).forEach(blob -> {
+                drawRelation(tree.getTreeName(), blob.getBlobName(), false);
+            }));
         }
         commitRelations.forEach((parent, childList) -> childList.stream().forEach(child -> drawCommitRelation(parent, child)));
 
@@ -181,75 +164,61 @@ public class UmlPrinter {
                         System.err.println(oid + "NOT FOUND in TAGS");
                         return;
                     } else {
-                        System.out.println("note top of " + annotatedTagMap.get(oid).getTagName() + " #red : " + refName);
+                        print("note top of " + annotatedTagMap.get(oid).getTagName() + " #red : " + refName);
                     }
                 } else {
-                    System.out.println("note top of " + commitMap.get(oid).getNodeName() + " #" + commitMap.get(oid).getColor() + " : " + refName);
+                    print("note top of " + commitMap.get(oid).getNodeName() + " #" + commitMap.get(oid).getColor() + " : " + refName);
                 }
             });
         }
 
-        printUmlFooter();
-        closeCenterHtml();
+        resultsWriters.forEach(it -> it.endSection());
     }
 
     private Stream<Blob> checkDistinct(Stream<Blob> stream, boolean flag) {
         return (flag) ? stream.distinct() : stream;
     }
 
-    private void openCenterHtml() {
-        System.out.println("++++");
-        System.out.println("<center>");
-        System.out.println("++++");
-
+    private void print(String text) {
+        resultsWriters.forEach(it -> it.writeOutput(text));
     }
-
-    private void closeCenterHtml() {
-        System.out.println("++++");
-        System.out.println("</center>");
-        System.out.println("++++");
-
-    }
-
     private Consumer<Commit> drawCommit = commit -> {
-        System.out.println("class " + commit.getNodeName() + " <<(C," + commit.getColor() + ")>> {");
-        System.out.println("-sha: " + commit.getSha1().substring(0, config.getHashLimit()));
-        System.out.println("--");
-        System.out.println("message: " + commit.getMessage());
-        System.out.println("--");
-        System.out.println("timestamp: " + commit.getTimeStamp());
-        System.out.println("}");
+        print("class " + commit.getNodeName() + " <<(C," + commit.getColor() + ")>> {");
+        print("-sha: " + commit.getSha1().substring(0, config.getHashLimit()));
+        print("--");
+        print("message: " + commit.getMessage());
+        print("--");
+        print("timestamp: " + commit.getTimeStamp());
+        print("}");
     };
 
     private void drawTree(Tree tree) {
-        System.out.println("class Tree" + tree.getId() + " <<(T," + resolveColor(tree.getId() - 1) + ")>> {");
-        System.out.println("-sha: " + tree.getSha1().substring(0, config.getHashLimit()));
-        System.out.println("--");
-        System.out.println(tree.getContent());
-        System.out.println("}");
+        print("class Tree" + tree.getId() + " <<(T," + resolveColor(tree.getId() - 1) + ")>> {");
+        print("-sha: " + tree.getSha1().substring(0, config.getHashLimit()));
+        print("--");
+        print(tree.getContent());
+        print("}");
     }
 
     private void drawBlobs() {
-        blobs.stream().forEach(
-                blob -> {
-                    System.out.println("class Blob" + blob.getId() + " <<(B," + blob.getColor() + ")>> {");
-                    System.out.println("-sha: " + blob.getSha1().substring(0, config.getHashLimit()));
-                    System.out.println("--");
-                    System.out.println(blob.getContent());
-                    System.out.println("}");
-                }
-        );
+        blobs.stream().forEach(blob -> {
+            print("class Blob" + blob.getId() + " <<(B," + blob.getColor() + ")>> {");
+            print("-sha: " + blob.getSha1().substring(0, config.getHashLimit()));
+            print("--");
+            print(blob.getContent());
+            print("}");
+        });
     }
 
     private void drawAnnotatedTags() {
         annotatedTagMap.forEach((oid, tag) -> {
-            System.out.println("class Tag" + tag.getId() + " <<(T,red)>> {");
-            System.out.println("-sha: " + tag.getOid().substring(0, config.getHashLimit()));
-            System.out.println("--");
-            System.out.println(tag.getName());
-            System.out.println("--");
-            System.out.println(tag.getMessage());
-            System.out.println("}");
+            print("class Tag" + tag.getId() + " <<(T,red)>> {");
+            print("-sha: " + tag.getOid().substring(0, config.getHashLimit()));
+            print("--");
+            print(tag.getName());
+            print("--");
+            print(tag.getMessage());
+            print("}");
         });
     }
 
@@ -262,9 +231,9 @@ public class UmlPrinter {
 
     private void drawRelation(String object1, String object2, boolean left) {
         if (left) {
-            System.out.println(object1 + " -l-> " + object2);
+            print(object1 + " -l-> " + object2);
         } else {
-            System.out.println(object1 + " --> " + object2);
+            print(object1 + " --> " + object2);
         }
     }
 
@@ -274,33 +243,15 @@ public class UmlPrinter {
 
     public void registerTag(String oid, String tagName, String shortMessage, String parrentCommitSHA1) {
         annotatedTagCounter++;
-        annotatedTagMap.putIfAbsent(oid, AnnotatedTag.builder()
-                .oid(oid)
-                .id(annotatedTagCounter)
-                .tagName("Tag" + annotatedTagCounter)
-                .name(tagName)
-                .message(shortMessage)
-                .parrentCommitSha1(parrentCommitSHA1)
-                .build());
+        annotatedTagMap.putIfAbsent(oid, AnnotatedTag.builder().oid(oid).id(annotatedTagCounter).tagName("Tag" + annotatedTagCounter).name(tagName).message(shortMessage).parrentCommitSha1(parrentCommitSHA1).build());
     }
 
     private void printUmlHeader() {
-        StringBuilder title = new StringBuilder()
-                .append("Git repository snapshot: ")
-                .append(commits.size()).append(" commits, ")
-                .append(trees.size()).append(" trees, ")
-                .append(blobs.size()).append(" blobs, ")
-                .append(refs.size()).append(" refs: ");
-
+        StringBuilder title = new StringBuilder().append("Git repository snapshot: ").append(commits.size()).append(" commits, ").append(trees.size()).append(" trees, ").append(blobs.size()).append(" blobs, ").append(refs.size()).append(" refs: ");
         title.append(refs.keySet().stream().collect(Collectors.joining(",")));
-
-        System.out.println("[plantuml, " + UUID.randomUUID() + ", png, title=\"" + title.toString() + "\", width=1000, height=1000]");
-        System.out.println("....");
+        resultsWriters.forEach(it -> it.startSection("[plantuml, " + UUID.randomUUID() + ", png, title=\"" + title.toString() + "\", width=1000, height=1000]"));
     }
 
-    private void printUmlFooter() {
-        System.out.println("....");
-    }
 }
 
 @Data
@@ -318,8 +269,12 @@ class Commit {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Commit)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Commit)) {
+            return false;
+        }
 
         Commit commit = (Commit) o;
 
@@ -354,8 +309,12 @@ class Tree {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Tree)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Tree)) {
+            return false;
+        }
 
         Tree tree = (Tree) o;
 
@@ -379,8 +338,12 @@ class Blob {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Blob)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Blob)) {
+            return false;
+        }
 
         Blob blob = (Blob) o;
 

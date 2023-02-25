@@ -4,4 +4,4 @@ show-tree-blob: true
 single-arrow-tree: false
 hash-limit: 8
 resolve:
-  - "master"
+  - "main"
