@@ -105,7 +105,7 @@ list of branches (**master** or **main** is preferred)
 ![img.png](img.png)
 
 ## Contributing
-Contributions are welcome! Please see the Contributing Guidelines for details.
+Contributions are welcome!
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
