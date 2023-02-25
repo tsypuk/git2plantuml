@@ -4,9 +4,13 @@ Git2PlantUML is a tool that reads git repository commits and renders them as Pla
 
 If you are studying or teaching git, this tool can be extremely useful for you to demo internals of git structures.
 
+---
+
 Check out my posts about internal git structures (git2plantuml used to visualize data):
 - [How actually git tracks objects. Snapshotting and the Illusion of git Diff.](https://tsypuk.github.io/posts/git-diff-illusion/)
 - [Git branches, where do they lead ?](https://tsypuk.github.io/posts/git-branches/)
+
+---
 
 ## Installation
 
@@ -21,6 +25,8 @@ Check out my posts about internal git structures (git2plantuml used to visualize
 
 BUILD SUCCESSFUL in 1s
 ```
+
+---
 
 ## Usage
 
@@ -108,8 +114,14 @@ list of branches (**master** or **main** is preferred)
 
 ![img.png](img.png)
 
+---
+
 ## Contributing
+
 Contributions are welcome!
 
+---
+
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
