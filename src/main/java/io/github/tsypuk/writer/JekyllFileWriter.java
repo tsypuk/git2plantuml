@@ -1,5 +1,6 @@
 package io.github.tsypuk.writer;
 
+import io.github.tsypuk.config.GitConfig;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
@@ -12,8 +13,8 @@ public class JekyllFileWriter implements ResultsWriter {
     Path path;
 
     @SneakyThrows
-    public JekyllFileWriter() {
-        path = Paths.get("/tmp/jekyll.plantuml");
+    public JekyllFileWriter(GitConfig config) {
+        path = Paths.get(config.getResultFile() + ".jekyll");
         Files.deleteIfExists(path);
         Files.createFile(path);
     }

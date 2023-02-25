@@ -1,5 +1,6 @@
 package io.github.tsypuk;
 
+import io.github.tsypuk.config.GitConfig;
 import io.github.tsypuk.core.AnnotatedTag;
 import io.github.tsypuk.core.Blob;
 import io.github.tsypuk.core.Commit;
@@ -17,13 +18,9 @@ import java.util.stream.Stream;
 
 public class UmlPrinter {
 
-    List<ResultsWriter> resultsWriters = List.of(
-            new PlantUMLFileWriter(),
-            new JekyllFileWriter(),
-            new ConsoleOutput()
-    );
     boolean inCommit;
     GitConfig config;
+    List<ResultsWriter> resultsWriters;
 
     String activeCommit;
     Commit activeCm;
@@ -105,6 +102,15 @@ public class UmlPrinter {
 
     public void print(GitConfig config) {
         this.config = config;
+        resultsWriters = new ArrayList<>();
+        resultsWriters.add(new PlantUMLFileWriter(config));
+        if (config.isConsoleDebug()) {
+            resultsWriters.add(new ConsoleOutput());
+        }
+        if (config.isPlantumlJekyll()) {
+            resultsWriters.add(new JekyllFileWriter(config));
+        }
+
         blobCounter = 0;
         List<Commit> commitsList = new ArrayList<>(commits);
         commitsList.sort(Comparator.comparingInt(Commit::getTimeStamp).reversed());

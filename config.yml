@@ -1,5 +1,8 @@
 repo-path: "/tmp/gitexplore"
+result-file: "/tmp/result.plantuml"
 show-branches: true
+console-debug: false
+plantuml-jekyll: false
 show-tree-blob: true
 single-arrow-tree: false
 hash-limit: 8

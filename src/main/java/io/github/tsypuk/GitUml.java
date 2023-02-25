@@ -1,5 +1,7 @@
 package io.github.tsypuk;
 
+import io.github.tsypuk.config.ConfigService;
+import io.github.tsypuk.config.GitConfig;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.lib.*;

@@ -1,5 +1,6 @@
 package io.github.tsypuk.writer;
 
+import io.github.tsypuk.config.GitConfig;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
@@ -12,8 +13,8 @@ public class PlantUMLFileWriter implements ResultsWriter {
     Path path;
 
     @SneakyThrows
-    public PlantUMLFileWriter() {
-        path = Paths.get("/tmp/result.plantuml");
+    public PlantUMLFileWriter(GitConfig config) {
+        path = Paths.get(config.getResultFile());
         Files.deleteIfExists(path);
         Files.createFile(path);
     }
