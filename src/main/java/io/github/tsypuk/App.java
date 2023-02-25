@@ -23,31 +23,34 @@ import java.util.Set;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 @Slf4j
-public class GitUml {
+public class App {
     private UmlPrinter umlPrinter = new UmlPrinter();
     private Set<ObjectId> processedCommits = new HashSet<>();
     private GitConfig config;
     private Repository repository;
 
-    public static void main(String[] args) throws IOException {
-        GitUml gitUml = new GitUml();
-        gitUml.loadConfig();
-        gitUml.showAllRefs();
-        gitUml.resolveObjects();
-        gitUml.printAll();
+    public static void main(String[] args)
+            throws IOException {
+        App app = new App();
+        app.loadConfig();
+        app.showAllRefs();
+        app.resolveObjects();
+        app.printAll();
     }
 
     private void printAll() {
         umlPrinter.print(config);
     }
 
-    public void loadConfig() throws IOException {
+    public void loadConfig()
+            throws IOException {
         ConfigService configService = new ConfigService();
         this.config = configService.loadConfig();
         this.repository = openJGitRepository(config.getRepoPath());
     }
 
-    private void showAllRefs() throws IOException {
+    private void showAllRefs()
+            throws IOException {
         repository.getRefDatabase().getRefs().stream().forEach(ref -> {
             log.info(ref.getName() + ref.getObjectId().name());
             umlPrinter.registerRef(ref.getName(), ref.getObjectId().name());
@@ -105,7 +108,8 @@ public class GitUml {
     }
 
 
-    private void dumpCommit(RevCommit commit, Repository repository) throws IOException {
+    private void dumpCommit(RevCommit commit, Repository repository)
+            throws IOException {
         ObjectId commitOid = commit.getId();
         if (!processedCommits.contains(commitOid)) {
             umlPrinter.registerCommit(commit);
@@ -159,7 +163,8 @@ public class GitUml {
         };
     }
 
-    private Repository openJGitRepository(String repoPath) throws IOException {
+    private Repository openJGitRepository(String repoPath)
+            throws IOException {
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         return builder
                 .setGitDir(new File(repoPath + "/.git"))
