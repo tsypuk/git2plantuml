@@ -39,6 +39,29 @@ branches are shown on top of commit
 ### console-debug : true
 besides FileOutput, will also print to console generated format
 
+``` shell
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+
+> Task :GitUml.main()
+++++
+<center>
+++++
+[plantuml, 29fca3c4-735e-4ec6-a2cc-779c6ba99009, png, title="Git repository snapshot: 3 commits, 3 trees, 2 blobs, 2 refs: HEAD,refs/heads/main", width=1000, height=1000]
+....
+class Commit3 <<(C,orange)>> {
+-sha: 3150d02c
+--
+message: added 3rd file
+
+--
+timestamp: 1677327539
+}
+class Commit2 <<(C,lightblue)>> {
+
+```
+
 ### plantuml-jekyll : true
 will generate one more file, wrapped with jekyll-specific headers
 
@@ -53,7 +76,7 @@ represents Commit, Tree, Blob objects. On false - Commit only
 If there are multiple tree references to the same Blob will show as single connection
 
 ![img_4.png](img_4.png)
-![img_5.png](img_5.png)
+![img_7.png](img_7.png)
 
 ### hash-limit : 8
 
@@ -61,4 +84,4 @@ Default to 8. How many digits from sha will be included
 ![img_6.png](img_6.png)
 
 ### resolve :
-list of branches (master/main is preferred)
+list of branches (**master** or **main** is preferred)
